@@ -31,7 +31,7 @@ const icons: Record<SocialMediaVariant, ReactNode> = {
 export const SocialMedia: FC<Props> = ({ variant, children }) => {
   return (
     <IconContext.Provider value={{ color: "white" }}>
-      <span className="flex flex-row items-center gap-1 text-lg text-white">
+      <span className="flex flex-row items-center gap-1 text-xl text-white">
         {icons[variant]}
         <p>{children}</p>
       </span>
