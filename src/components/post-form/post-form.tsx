@@ -6,7 +6,7 @@ import { UseFormRegister, useForm } from "react-hook-form";
 import { BiArrowBack } from "react-icons/bi";
 import { MdAdd, MdRemove } from "react-icons/md";
 
-import { PostDataContext } from "@/context/post-data-context";
+import { PosterContext } from "@/context/poster";
 import { cn } from "@/lib/utils";
 import { formatFullDate } from "@/utils/utils";
 
@@ -34,10 +34,9 @@ export interface PostFormInputs {
 
 interface Props {
   onDownload: () => void;
-  register: UseFormRegister<PostFormInputs>;
 }
 
-export const PostForm: FC<Props> = ({ register, onDownload }) => {
+export const PostForm: FC<Props> = ({ onDownload }) => {
   const {
     register: regContent,
     handleSubmit: submitContent,
@@ -51,6 +50,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
   } = useForm<Pick<PostFormInputs, "presenters">>();
 
   const {
+    posterForm,
     topics,
     presenters,
     date,
@@ -60,7 +60,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
     addPresenter,
     removePresenter,
     setDate,
-  } = useContext(PostDataContext);
+  } = useContext(PosterContext);
 
   const onSubmitContent = (data: Pick<PostFormInputs, "content">) => {
     addTopic(data.content);
@@ -77,12 +77,12 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
   };
 
   return (
-    <div className="bg-muted relative h-screen w-full overflow-hidden text-white">
+    <div className="relative h-screen w-full overflow-hidden bg-muted text-white">
       <div className="relative flex h-full flex-col gap-1 overflow-auto p-2">
         <div className="flex flex-row items-center gap-2">
           <Link
             href="/"
-            className="bg-muted hover:bg-primary flex h-8 items-center justify-center rounded-sm border border-white px-2 text-lg transition-all"
+            className="flex h-8 items-center justify-center rounded-sm border border-white bg-muted px-2 text-lg transition-all hover:bg-primary"
           >
             <BiArrowBack />
           </Link>
@@ -92,7 +92,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
           <Label htmlFor="event">Evento</Label>
           <Input
             id="event"
-            {...register("event")}
+            {...posterForm?.register("event")}
             type="text"
             placeholder="Evento"
             className="text-muted"
@@ -102,7 +102,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
           <Label htmlFor="title">Título</Label>
           <Input
             id="title"
-            {...register("title")}
+            {...posterForm?.register("title")}
             type="text"
             placeholder="Título"
             className="text-muted"
@@ -121,7 +121,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
               />
               <Button
                 type="submit"
-                className="hover:bg-primary text-lg transition-all hover:brightness-110"
+                className="text-lg transition-all hover:bg-primary hover:brightness-110"
               >
                 <MdAdd />
               </Button>
@@ -163,7 +163,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
               />
               <Button
                 type="submit"
-                className="hover:bg-primary text-lg transition-all hover:brightness-110"
+                className="text-lg transition-all hover:bg-primary hover:brightness-110"
               >
                 <MdAdd />
               </Button>
@@ -196,7 +196,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
           <Label htmlFor="location">Ubicación</Label>
           <Input
             id="location"
-            {...register("location")}
+            {...posterForm?.register("location")}
             type="text"
             placeholder="Ubicación"
             className="text-muted"
@@ -209,7 +209,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
         <div>
           <Label htmlFor="time">Hora</Label>
           <Select onValueChange={setTime}>
-            <SelectTrigger className="text-muted w-full">
+            <SelectTrigger className="w-full text-muted">
               <SelectValue placeholder="Selecciona la hora" />
             </SelectTrigger>
             <SelectContent>
@@ -224,7 +224,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
         <Button
           type="button"
           onClick={handleDownload}
-          className="hover:bg-primary mt-1 w-full transition-all hover:brightness-110"
+          className="mt-1 w-full transition-all hover:bg-primary hover:brightness-110"
         >
           Descargar
         </Button>
@@ -245,7 +245,7 @@ const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
         <Button
           variant={"outline"}
           className={cn(
-            "text-muted hover:bg-primary w-full justify-start text-left font-normal hover:text-white",
+            "w-full justify-start text-left font-normal text-muted hover:bg-primary hover:text-white",
             !date && "text-muted-foreground",
           )}
         >

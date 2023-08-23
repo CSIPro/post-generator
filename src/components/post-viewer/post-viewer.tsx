@@ -6,7 +6,7 @@ import { GrUndo } from "react-icons/gr";
 import { IoLocationSharp, IoCalendarClear, IoTimeSharp } from "react-icons/io5";
 import { MdAdd, MdFitScreen, MdRemove } from "react-icons/md";
 
-import { PostDataContext } from "@/context/post-data-context";
+import { PosterContext } from "@/context/poster";
 import { formatFullTemplateDate } from "@/utils/utils";
 
 import { PostFormInputs } from "../post-form/post-form";
@@ -15,12 +15,12 @@ import { NameEmphasis } from "../ui/name-emphasis";
 
 interface Props {
   postRef: RefObject<HTMLDivElement>;
-  watch: UseFormWatch<PostFormInputs>;
 }
 
-export const PostViewer: FC<Props> = ({ watch, postRef }) => {
+export const PostViewer: FC<Props> = ({ postRef }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
-  const { topics, presenters, date, time } = useContext(PostDataContext);
+  const { topics, presenters, date, time, posterForm } =
+    useContext(PosterContext);
 
   const [zoom, setZoom] = useState(1);
 
@@ -39,8 +39,6 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
   const resetZoom = () => {
     setZoom(1);
   };
-
-  console.log(time);
 
   return (
     <div className="relative col-span-2 flex max-w-full bg-slate-800 text-white md:max-h-screen">
@@ -77,19 +75,19 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
         >
           <div
             ref={postRef}
-            className="bg-primary relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 px-8 py-24 text-3xl"
+            className="relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 bg-primary px-8 py-24 text-3xl"
           >
             <span className="absolute left-8 top-8 flex flex-row gap-2 text-5xl">
               <h1>CSI PRO</h1>
-              {watch("event")?.length > 0 && (
-                <NameEmphasis>{watch("event")}</NameEmphasis>
+              {posterForm && posterForm?.watch("event")?.length > 0 && (
+                <NameEmphasis>{posterForm?.watch("event")}</NameEmphasis>
               )}
             </span>
             <div className="col-span-full pl-2">
               <div className="flex h-full flex-col items-center justify-center">
-                {watch("title")?.length > 0 && (
-                  <h1 className="text-primary bg-white px-4 py-2 text-center text-7xl font-bold">
-                    {watch("title")}
+                {posterForm && posterForm?.watch("title")?.length > 0 && (
+                  <h1 className="bg-white px-4 py-2 text-center text-7xl font-bold text-primary">
+                    {posterForm?.watch("title")}
                   </h1>
                 )}
               </div>
@@ -122,7 +120,7 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
               <div className="gap-1pl-5 flex flex-col">
                 <span className="flex items-center gap-2">
                   <IoLocationSharp />
-                  <p>{watch("location")}</p>
+                  <p>{posterForm?.watch("location")}</p>
                 </span>
                 {date && (
                   <span className="flex flex-row items-center gap-2">
