@@ -7,7 +7,7 @@ import { IoLocationSharp, IoCalendarClear, IoTimeSharp } from "react-icons/io5";
 import { MdAdd, MdFitScreen, MdRemove } from "react-icons/md";
 
 import { PostDataContext } from "@/context/post-data-context";
-import { formatFullDate } from "@/utils/utils";
+import { formatFullTemplateDate } from "@/utils/utils";
 
 import { PostFormInputs } from "../post-form/post-form";
 import { SocialMedia } from "../social-media/social-media";
@@ -128,7 +128,7 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
                   <span className="flex flex-row items-center gap-2">
                     <IoCalendarClear />
                     <>
-                      <p>{formatFullDate(date)}</p>
+                      <p>{formatFullTemplateDate(date)}</p>
                     </>
                   </span>
                 )}
