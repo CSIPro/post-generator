@@ -1,7 +1,9 @@
 import { CalendarIcon } from "lucide-react";
+import Link from "next/link";
 import { FC, useContext } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
-import { Control, Controller, UseFormRegister, useForm } from "react-hook-form";
+import { UseFormRegister, useForm } from "react-hook-form";
+import { BiArrowBack } from "react-icons/bi";
 import { MdAdd, MdRemove } from "react-icons/md";
 
 import { PostDataContext } from "@/context/post-data-context";
@@ -10,7 +12,6 @@ import { formatFullDate } from "@/utils/utils";
 
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
-import { Form, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -78,7 +79,15 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
   return (
     <div className="bg-muted relative h-screen w-full overflow-hidden text-white">
       <div className="relative flex h-full flex-col gap-1 overflow-auto p-2">
-        <h1 className="text-xl">Edita el contenido</h1>
+        <div className="flex flex-row items-center gap-2">
+          <Link
+            href="/"
+            className="bg-muted hover:bg-primary flex h-8 items-center justify-center rounded-sm border border-white px-2 text-lg transition-all"
+          >
+            <BiArrowBack />
+          </Link>
+          <h1 className="text-xl">Edita el contenido</h1>
+        </div>
         <div>
           <Label htmlFor="event">Evento</Label>
           <Input
@@ -112,7 +121,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
               />
               <Button
                 type="submit"
-                className="hover:bg-primary transition-all hover:brightness-110"
+                className="hover:bg-primary text-lg transition-all hover:brightness-110"
               >
                 <MdAdd />
               </Button>
@@ -132,7 +141,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
                 <p>&#62; {topic}</p>
                 <Button
                   variant="outline"
-                  className="h-6 cursor-pointer bg-transparent text-white"
+                  className="h-6 cursor-pointer bg-transparent text-lg text-white"
                   onClick={removeTopic.bind(null, topic)}
                 >
                   <MdRemove />
@@ -154,7 +163,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
               />
               <Button
                 type="submit"
-                className="hover:bg-primary transition-all hover:brightness-110"
+                className="hover:bg-primary text-lg transition-all hover:brightness-110"
               >
                 <MdAdd />
               </Button>
@@ -174,7 +183,7 @@ export const PostForm: FC<Props> = ({ register, onDownload }) => {
                 <p>&#62; {presenter}</p>
                 <Button
                   variant="outline"
-                  className="h-6 cursor-pointer bg-transparent text-white"
+                  className="h-6 cursor-pointer bg-transparent text-lg text-white"
                   onClick={removePresenter.bind(null, presenter)}
                 >
                   <MdRemove />

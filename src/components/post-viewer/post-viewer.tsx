@@ -3,6 +3,7 @@ import { FC, RefObject, useContext, useRef, useState } from "react";
 import { UseFormWatch } from "react-hook-form";
 import { IconContext } from "react-icons";
 import { GrUndo } from "react-icons/gr";
+import { IoLocationSharp, IoCalendarClear, IoTimeSharp } from "react-icons/io5";
 import { MdAdd, MdFitScreen, MdRemove } from "react-icons/md";
 
 import { PostDataContext } from "@/context/post-data-context";
@@ -10,6 +11,7 @@ import { formatFullDate } from "@/utils/utils";
 
 import { PostFormInputs } from "../post-form/post-form";
 import { SocialMedia } from "../social-media/social-media";
+import { NameEmphasis } from "../ui/name-emphasis";
 
 interface Props {
   postRef: RefObject<HTMLDivElement>;
@@ -75,26 +77,24 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
         >
           <div
             ref={postRef}
-            className="bg-primary relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 px-4 py-24 text-3xl"
+            className="bg-primary relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 px-8 py-24 text-3xl"
           >
-            <span className="absolute left-4 top-4 flex flex-row gap-2 text-5xl">
+            <span className="absolute left-8 top-8 flex flex-row gap-2 text-5xl">
               <h1>CSI PRO</h1>
               {watch("event")?.length > 0 && (
-                <h1 className="text-primary bg-white px-2 font-bold uppercase tracking-wider">
-                  {watch("event")}
-                </h1>
+                <NameEmphasis>{watch("event")}</NameEmphasis>
               )}
             </span>
             <div className="col-span-full pl-2">
               <div className="flex h-full flex-col items-center justify-center">
                 {watch("title")?.length > 0 && (
-                  <h1 className="text-primary bg-white p-2 text-center text-7xl font-bold">
+                  <h1 className="text-primary bg-white px-4 py-2 text-center text-7xl font-bold">
                     {watch("title")}
                   </h1>
                 )}
               </div>
             </div>
-            <div className="col-span-full pl-2">
+            <div className="col-span-2 pl-2">
               <ul className="ml-px border-l-4 border-white pl-5">
                 {topics.map((topic, index) => (
                   <li key={`Topic ${topic} ${index}`} className="flex flex-row">
@@ -105,7 +105,7 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
             </div>
             <div className="col-span-2 flex flex-col gap-2 pl-2">
               <h2>Presentado por:</h2>
-              <ul className="ml-px border-l-4 border-white pl-5">
+              <ul className="ml-px">
                 {presenters.map((presenter, index) => (
                   <li
                     key={`Presenter ${presenter} ${index}`}
@@ -117,22 +117,29 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
               </ul>
             </div>
             <div className="w-1/2"></div>
-            <div className="col-span-2 pl-2">
+            <div className="col-span-2 flex flex-col gap-2 pl-2">
               <h1>Ubicación y fecha</h1>
-              <div className="flex flex-col gap-1 border-l-4 border-white pl-5">
-                <p className="">{watch("location")}</p>
+              <div className="gap-1pl-5 flex flex-col">
+                <span className="flex items-center gap-2">
+                  <IoLocationSharp />
+                  <p>{watch("location")}</p>
+                </span>
                 {date && (
-                  <span className="flex flex-row gap-2">
+                  <span className="flex flex-row items-center gap-2">
+                    <IoCalendarClear />
                     <>
                       <p>{formatFullDate(date)}</p>
-                      {time && time.length > 0 && <p> a las {time} hrs.</p>}
                     </>
                   </span>
                 )}
+                <span className="flex flex-row items-center gap-2">
+                  <IoTimeSharp />
+                  {time && time.length > 0 && <p>{time} hrs</p>}
+                </span>
               </div>
             </div>
             <div className=""></div>
-            <div className="absolute bottom-4 left-4 flex w-3/4 flex-row gap-4">
+            <div className="absolute bottom-8 left-8 flex w-3/4 flex-row gap-4">
               <SocialMedia variant="instagram">@csipro.dev</SocialMedia>
               <SocialMedia variant="github">/csipro</SocialMedia>
               <SocialMedia variant="twitter">@csipro_dev</SocialMedia>
@@ -142,9 +149,9 @@ export const PostViewer: FC<Props> = ({ watch, postRef }) => {
             <Image
               src="/assets/csipro.svg"
               alt="CSI PRO icon"
-              width={80}
-              height={80}
-              className="absolute bottom-4 right-4"
+              width={120}
+              height={120}
+              className="absolute bottom-8 right-8"
             />
           </div>
         </div>
