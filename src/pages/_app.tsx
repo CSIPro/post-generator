@@ -1,3 +1,4 @@
+/* eslint-disable check-file/filename-naming-convention */
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
