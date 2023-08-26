@@ -1,7 +1,20 @@
 {
   "extends": ["next/core-web-vitals", "plugin:import/recommended", "prettier"],
-  "plugins": ["import"],
+  "plugins": ["import", "react", "check-file"],
   "rules": {
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "parens-new-line",
+        "prop": "parens-new-line"
+      }
+    ],
+    "import/no-unresolved": "error",
     "import/order": [
       "error",
       {
@@ -14,10 +27,22 @@
           "builtin",
           "external",
           "internal",
-          "parent",
-          "sibling",
-          "index"
+          ["sibling", "parent"],
+          "index",
+          "unknown"
         ]
+      }
+    ],
+    "check-file/filename-naming-convention": [
+      "error",
+      {
+        "**/*.{ts,tsx,js,jsx,json}": "+([a-z])*([-a-z0-9])*(.+([a-z0-9]))"
+      }
+    ],
+    "check-file/folder-naming-convention": [
+      "error",
+      {
+        "**/": "+([a-z])*([-a-z0-9])*(.+([a-z0-9]))"
       }
     ]
   }
