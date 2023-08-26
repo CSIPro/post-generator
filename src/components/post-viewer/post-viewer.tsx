@@ -19,8 +19,13 @@ interface Props {
 
 export const PostViewer: FC<Props> = ({ postRef }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
-  const { topics, presenters, date, time, posterForm } =
-    useContext(PosterContext);
+  const {
+    topics: { topics },
+    presenters: { presenters },
+    date,
+    time,
+    posterForm,
+  } = useContext(PosterContext);
 
   const [zoom, setZoom] = useState(1);
 

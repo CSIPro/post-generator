@@ -51,14 +51,10 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
 
   const {
     posterForm,
-    topics,
-    presenters,
+    topics: { topics, addTopic, removeTopic },
+    presenters: { presenters, addPresenter, removePresenter },
     date,
     setTime,
-    addTopic,
-    removeTopic,
-    addPresenter,
-    removePresenter,
     setDate,
   } = useContext(PosterContext);
 

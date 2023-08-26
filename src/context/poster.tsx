@@ -13,35 +13,51 @@ import { PostFormInputs } from "@/components/post-form/post-form";
 
 interface PosterContextProps {
   posterForm?: UseFormReturn<PostFormInputs, undefined, any>;
-  topics: string[];
-  presenters: string[];
-  pictures?: string[];
+  topics: {
+    topics: string[];
+    addTopic: (topic: string) => void;
+    removeTopic: (topic: string) => void;
+    setTopics: (topics: string[]) => void;
+  };
+  presenters: {
+    presenters: string[];
+    addPresenter: (presenter: string) => void;
+    removePresenter: (presenter: string) => void;
+    setPresenters: (presenters: string[]) => void;
+  };
+  pictures?: {
+    pictures: string[];
+    addPicture?: (picture: string) => void;
+    removePicture?: (picture: string) => void;
+    setPictures?: (pictures: string[]) => void;
+  };
   date?: Date;
   time?: string;
   setTime?: (time: string) => void;
   setDate: SelectSingleEventHandler;
-  addTopic: (topic: string) => void;
-  removeTopic: (topic: string) => void;
-  addPresenter: (presenter: string) => void;
-  removePresenter: (presenter: string) => void;
-  setTopics: (topics: string[]) => void;
-  setPresenters: (presenters: string[]) => void;
-  setPictures?: (pictures: string[]) => void;
 }
 
 export const PosterContext = createContext<PosterContextProps>({
-  topics: [],
-  presenters: [],
-  pictures: [],
+  topics: {
+    topics: [],
+    addTopic: (topic: string) => {},
+    removeTopic: (topic: string) => {},
+    setTopics: (topics: string[]) => {},
+  },
+  presenters: {
+    presenters: [],
+    addPresenter: (presenter: string) => {},
+    removePresenter: (presenter: string) => {},
+    setPresenters: (presenters: string[]) => {},
+  },
+  pictures: {
+    pictures: [],
+    addPicture: (picture: string) => {},
+    removePicture: (picture: string) => {},
+    setPictures: (pictures: string[]) => {},
+  },
   date: new Date(),
   setDate: () => {},
-  addTopic: (topic: string) => {},
-  removeTopic: (topic: string) => {},
-  addPresenter: (presenter: string) => {},
-  removePresenter: (presenter: string) => {},
-  setTopics: (topics: string[]) => {},
-  setPresenters: (presenters: string[]) => {},
-  setPictures: (pictures: string[]) => {},
 });
 
 export const PosterContextProvider: FC<{ children: ReactNode }> = ({
@@ -78,18 +94,22 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
 
   const providerValue = {
     posterForm,
-    topics,
-    presenters,
+    topics: {
+      topics,
+      addTopic,
+      removeTopic,
+      setTopics,
+    },
+    presenters: {
+      presenters,
+      addPresenter,
+      removePresenter,
+      setPresenters,
+    },
     date,
     time,
     setTime,
     setDate,
-    addTopic,
-    removeTopic,
-    addPresenter,
-    removePresenter,
-    setTopics,
-    setPresenters,
   };
 
   return (
