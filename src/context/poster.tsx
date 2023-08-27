@@ -23,11 +23,11 @@ interface PosterContextProps {
     removePresenter: (presenter: string) => void;
     setPresenters: (presenters: string[]) => void;
   };
-  pictures?: {
-    pictures: string[];
-    addPicture?: (picture: string) => void;
-    removePicture?: (picture: string) => void;
-    setPictures?: (pictures: string[]) => void;
+  assets: {
+    assets: File[];
+    addAsset: (asset: File) => void;
+    removeAsset: (asset: File) => void;
+    setAssets: (assets: File[]) => void;
   };
   date?: Date;
   time?: string;
@@ -49,11 +49,11 @@ export const PosterContext = createContext<PosterContextProps>({
     removePresenter: (presenter) => {},
     setPresenters: (presenters) => {},
   },
-  pictures: {
-    pictures: [],
-    addPicture: (picture) => {},
-    removePicture: (picture) => {},
-    setPictures: (pictures) => {},
+  assets: {
+    assets: [],
+    addAsset: (asset) => {},
+    removeAsset: (asset) => {},
+    setAssets: (assets) => {},
   },
   date: new Date(),
   setDate: () => {},
@@ -66,6 +66,8 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     useState<keyof typeof colorItemVariants>("primary");
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
+  const [assets, setAssets] = useState<File[]>([]);
+
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
 
@@ -93,6 +95,14 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     );
   };
 
+  const addAsset = (asset: File) => {
+    setAssets((prevAssets) => [...prevAssets, asset]);
+  };
+
+  const removeAsset = (asset: File) => {
+    setAssets((prevAssets) => prevAssets.filter((a) => a !== asset));
+  };
+
   const providerValue = {
     posterForm,
     posterBg: {
@@ -110,6 +120,12 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
       addPresenter,
       removePresenter,
       setPresenters,
+    },
+    assets: {
+      assets,
+      addAsset,
+      removeAsset,
+      setAssets,
     },
     date,
     time,

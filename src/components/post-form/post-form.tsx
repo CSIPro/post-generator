@@ -11,6 +11,7 @@ import {
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 
+import { AssetsForm } from "./assets-form";
 import { ContentForm } from "./content-form";
 import { TemplateForm } from "./template-form";
 
@@ -53,8 +54,10 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="assets-form" className="border-b-slate-400">
-              <AccordionTrigger>Recursos</AccordionTrigger>
-              <AccordionContent>Let&apos;s go</AccordionContent>
+              <AccordionTrigger>Recursos gráficos</AccordionTrigger>
+              <AccordionContent>
+                <AssetsForm />
+              </AccordionContent>
             </AccordionItem>
           </Accordion>
           <Button

@@ -23,7 +23,6 @@ export interface ContentFormInputs {
   presenters: string;
   location: string;
   time: string;
-  picture: FileList;
 }
 
 export const ContentForm = () => {
@@ -38,12 +37,6 @@ export const ContentForm = () => {
     handleSubmit: submitPresenters,
     reset: resetPresenters,
   } = useForm<Pick<ContentFormInputs, "presenters">>();
-
-  const {
-    register: regPicture,
-    handleSubmit: submitPicture,
-    reset: resetPicture,
-  } = useForm<Pick<ContentFormInputs, "picture">>();
 
   const {
     posterForm,
@@ -62,12 +55,6 @@ export const ContentForm = () => {
   const onSubmitPresenters = (data: Pick<ContentFormInputs, "presenters">) => {
     addPresenter(data.presenters);
     resetPresenters({ presenters: "" });
-  };
-
-  const onSubmitPicture = (data: Pick<ContentFormInputs, "picture">) => {
-    console.log(data);
-    // addPicture(data.picture);
-    // resetPicture({ picture: undefined });
   };
 
   return (
