@@ -9,10 +9,10 @@ import {
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
 
-import { PostFormInputs } from "@/components/post-form/post-form";
+import type { ContentFormInputs } from "@/components/post-form/content-form";
 
 interface PosterContextProps {
-  posterForm?: UseFormReturn<PostFormInputs, undefined, any>;
+  posterForm?: UseFormReturn<ContentFormInputs, undefined, any>;
   topics: {
     topics: string[];
     addTopic: (topic: string) => void;
@@ -68,7 +68,7 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
 
-  const posterForm = useForm<PostFormInputs>();
+  const posterForm = useForm<ContentFormInputs>();
 
   const addTopic = (topic: string) => {
     if (!topic) return;

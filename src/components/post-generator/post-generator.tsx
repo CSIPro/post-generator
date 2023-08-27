@@ -1,10 +1,7 @@
 import { toPng } from "html-to-image";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useRef } from "react";
 
-import { PosterContext } from "@/context/poster";
-
-import { PostForm, PostFormInputs } from "../post-form/post-form";
+import { PostForm } from "../post-form/post-form";
 import { PostViewer } from "../post-viewer/post-viewer";
 
 export const PostGenerator = () => {
@@ -26,7 +23,7 @@ export const PostGenerator = () => {
   };
 
   return (
-    <section className="grid w-full grid-cols-1 gap-1 md:grid-cols-3">
+    <section className="grid w-full grid-cols-1 grid-rows-2 md:grid-cols-5 md:grid-rows-1">
       <PostViewer postRef={posterRef} />
       <PostForm onDownload={handlePostDownload} />
     </section>
