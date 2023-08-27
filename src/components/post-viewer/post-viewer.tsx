@@ -3,9 +3,11 @@ import { FC, RefObject, useContext, useRef, useState } from "react";
 import { IoLocationSharp, IoCalendarClear, IoTimeSharp } from "react-icons/io5";
 
 import { PosterContext } from "@/context/poster";
+import { cn } from "@/lib/utils";
 import { formatFullTemplateDate } from "@/utils/utils";
 
 import { SocialMedia } from "../social-media/social-media";
+import { colorItemVariants } from "../ui/color-item";
 import { NameEmphasis } from "../ui/name-emphasis";
 import { ScrollArea } from "../ui/scroll-area";
 
@@ -19,6 +21,7 @@ interface Props {
 export const PostViewer: FC<Props> = ({ postRef }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
   const {
+    posterBg: { posterBg },
     topics: { topics },
     presenters: { presenters },
     date,
@@ -44,6 +47,8 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
     setZoom(1);
   };
 
+  const { bg: contextBg, text: contextText } = colorItemVariants[posterBg];
+
   return (
     <div className="relative col-span-3 max-h-96 max-w-full bg-slate-800 text-white md:max-h-screen">
       <ViewerControls
@@ -60,7 +65,11 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
           >
             <div
               ref={postRef}
-              className="relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 bg-primary px-8 py-24 text-3xl"
+              className={cn(
+                "relative grid aspect-square w-[1080px] grid-cols-3 grid-rows-4 gap-2 px-8 py-24 text-3xl transition-all",
+                contextBg,
+                contextText,
+              )}
             >
               <span className="absolute left-8 top-8 flex flex-row gap-2 text-5xl">
                 <h1>CSI PRO</h1>
@@ -71,7 +80,12 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
               <div className="col-span-full pl-2">
                 <div className="flex h-full flex-col items-center justify-center">
                   {posterForm && posterForm?.watch("title")?.length > 0 && (
-                    <h1 className="bg-white px-4 py-2 text-center text-7xl font-bold text-primary">
+                    <h1
+                      className={cn(
+                        "bg-white px-4 py-2 text-center text-7xl font-bold",
+                        colorItemVariants[posterBg].nameEmphasis,
+                      )}
+                    >
                       {posterForm?.watch("title")}
                     </h1>
                   )}

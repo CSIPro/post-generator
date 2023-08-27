@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 
 import { ContentForm } from "./content-form";
+import { TemplateForm } from "./template-form";
 
 interface Props {
   onDownload: () => void;
@@ -41,7 +42,9 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
               className="border-b-slate-400"
             >
               <AccordionTrigger>Plantilla</AccordionTrigger>
-              <AccordionContent>Let&apos;s go</AccordionContent>
+              <AccordionContent>
+                <TemplateForm />
+              </AccordionContent>
             </AccordionItem>
             <AccordionItem value="content-form" className="border-b-slate-400">
               <AccordionTrigger>Contenido</AccordionTrigger>

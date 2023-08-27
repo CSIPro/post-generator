@@ -1,18 +1,16 @@
-import {
-  FC,
-  ReactNode,
-  RefObject,
-  createContext,
-  useRef,
-  useState,
-} from "react";
+import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
 
 import type { ContentFormInputs } from "@/components/post-form/content-form";
+import { colorItemVariants } from "@/components/ui/color-item";
 
 interface PosterContextProps {
   posterForm?: UseFormReturn<ContentFormInputs, undefined, any>;
+  posterBg: {
+    posterBg: keyof typeof colorItemVariants;
+    setPosterBg: (color: keyof typeof colorItemVariants) => void;
+  };
   topics: {
     topics: string[];
     addTopic: (topic: string) => void;
@@ -38,23 +36,24 @@ interface PosterContextProps {
 }
 
 export const PosterContext = createContext<PosterContextProps>({
+  posterBg: { posterBg: "primary", setPosterBg: (color) => {} },
   topics: {
     topics: [],
-    addTopic: (topic: string) => {},
-    removeTopic: (topic: string) => {},
-    setTopics: (topics: string[]) => {},
+    addTopic: (topic) => {},
+    removeTopic: (topic) => {},
+    setTopics: (topics) => {},
   },
   presenters: {
     presenters: [],
-    addPresenter: (presenter: string) => {},
-    removePresenter: (presenter: string) => {},
-    setPresenters: (presenters: string[]) => {},
+    addPresenter: (presenter) => {},
+    removePresenter: (presenter) => {},
+    setPresenters: (presenters) => {},
   },
   pictures: {
     pictures: [],
-    addPicture: (picture: string) => {},
-    removePicture: (picture: string) => {},
-    setPictures: (pictures: string[]) => {},
+    addPicture: (picture) => {},
+    removePicture: (picture) => {},
+    setPictures: (pictures) => {},
   },
   date: new Date(),
   setDate: () => {},
@@ -63,6 +62,8 @@ export const PosterContext = createContext<PosterContextProps>({
 export const PosterContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [posterBg, setPosterBg] =
+    useState<keyof typeof colorItemVariants>("primary");
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
   const [date, setDate] = useState<Date>();
@@ -94,6 +95,10 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
 
   const providerValue = {
     posterForm,
+    posterBg: {
+      posterBg,
+      setPosterBg,
+    },
     topics: {
       topics,
       addTopic,
