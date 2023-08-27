@@ -6,7 +6,7 @@ interface Props {
 
 export const FullNameEmphasis: FC<Props> = ({ children }) => {
   return (
-    <span className="flex flex-row gap-2 text-5xl">
+    <span className={`flex flex-row gap-2 text-xl md:text-5xl whitespace-nowrap`}>
       <h1>CSI PRO</h1>
       <NameEmphasis>{children}</NameEmphasis>
     </span>
@@ -15,7 +15,7 @@ export const FullNameEmphasis: FC<Props> = ({ children }) => {
 
 export const NameEmphasis: FC<Props> = ({ children }) => {
   return (
-    <h1 className="text-primary bg-white px-2 font-bold uppercase tracking-wider">
+    <h1 className="bg-white px-2 font-bold uppercase tracking-wider text-primary">
       {children}
     </h1>
   );

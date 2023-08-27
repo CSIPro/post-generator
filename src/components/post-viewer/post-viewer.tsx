@@ -17,6 +17,7 @@ interface Props {
   postRef: RefObject<HTMLDivElement>;
 }
 
+// TODO: Fix image download on mobile
 export const PostViewer: FC<Props> = ({ postRef }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
   const {
@@ -46,7 +47,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
   };
 
   return (
-    <div className="relative col-span-2 flex max-w-full bg-slate-800 text-white md:max-h-screen">
+    <div className="relative max-h-96 col-span-2 max-w-full bg-slate-800 text-white md:max-h-screen">
       <IconContext.Provider value={{ className: "text-white" }}>
         <div className="absolute right-5 top-5 z-10 flex flex-col items-center gap-2 bg-slate-900 px-2 text-xs opacity-30 transition-opacity hover:opacity-100">
           <button
@@ -72,7 +73,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
       </IconContext.Provider>
       <div
         ref={viewerRef}
-        className="flex max-h-full max-w-full overflow-scroll p-1"
+        className="flex h-full md:w-full overflow-scroll p-1 md:h-full"
       >
         <div
           className="transition-transform"
