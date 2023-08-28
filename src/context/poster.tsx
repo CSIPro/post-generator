@@ -1,12 +1,15 @@
 import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
+import { useQuery, type UseQueryResult } from "react-query";
 
+import { Asset } from "@/components/post-form/assets-form";
 import type { ContentFormInputs } from "@/components/post-form/content-form";
 import { colorItemVariants } from "@/components/ui/color-item";
 
 interface PosterContextProps {
   posterForm?: UseFormReturn<ContentFormInputs, undefined, any>;
+  assetsQuery?: UseQueryResult<Asset[], unknown>;
   posterBg: {
     posterBg: keyof typeof colorItemVariants;
     setPosterBg: (color: keyof typeof colorItemVariants) => void;
@@ -59,9 +62,19 @@ export const PosterContext = createContext<PosterContextProps>({
   setDate: () => {},
 });
 
+const getAssets = async () => {
+  const res = await fetch("/api/images");
+
+  const data = (await res.json()) as Asset[];
+
+  return data;
+};
+
 export const PosterContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const assetsQuery = useQuery({ queryKey: ["assets"], queryFn: getAssets });
+
   const [posterBg, setPosterBg] =
     useState<keyof typeof colorItemVariants>("primary");
   const [topics, setTopics] = useState<string[]>([]);
@@ -105,6 +118,7 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
 
   const providerValue = {
     posterForm,
+    assetsQuery,
     posterBg: {
       posterBg,
       setPosterBg,
