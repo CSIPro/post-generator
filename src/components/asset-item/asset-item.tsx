@@ -6,6 +6,7 @@ import { MdAddBox, MdDelete } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
 import { PosterContext } from "@/context/poster";
+import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import {
@@ -14,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 
 export interface Asset {
   key: string;
@@ -36,7 +36,7 @@ export const AssetItem: FC<AssetItemProps> = ({ asset }) => {
     <div
       className={cn(
         "group relative flex h-full w-full items-center justify-center overflow-hidden bg-white bg-opacity-10",
-        `${isRendered && "ring-1 ring-accent"}`
+        `${isRendered && "ring-1 ring-accent"}`,
       )}
     >
       <AssetActions asset={asset} isRendered={isRendered} />
