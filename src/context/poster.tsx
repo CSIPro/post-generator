@@ -3,7 +3,7 @@ import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { useQuery, type UseQueryResult } from "react-query";
 
-import { Asset } from "@/components/post-form/assets-form";
+import { Asset } from "@/components/asset-item/asset-item";
 import type { ContentFormInputs } from "@/components/post-form/content-form";
 import { colorItemVariants } from "@/components/ui/color-item";
 
@@ -27,10 +27,10 @@ interface PosterContextProps {
     setPresenters: (presenters: string[]) => void;
   };
   assets: {
-    assets: File[];
-    addAsset: (asset: File) => void;
-    removeAsset: (asset: File) => void;
-    setAssets: (assets: File[]) => void;
+    assets: Asset[];
+    addAsset: (asset: Asset) => void;
+    removeAsset: (asset: Asset) => void;
+    setAssets: (assets: Asset[]) => void;
   };
   date?: Date;
   time?: string;
@@ -79,7 +79,7 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     useState<keyof typeof colorItemVariants>("primary");
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
-  const [assets, setAssets] = useState<File[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
 
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
@@ -108,11 +108,11 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     );
   };
 
-  const addAsset = (asset: File) => {
+  const addAsset = (asset: Asset) => {
     setAssets((prevAssets) => [...prevAssets, asset]);
   };
 
-  const removeAsset = (asset: File) => {
+  const removeAsset = (asset: Asset) => {
     setAssets((prevAssets) => prevAssets.filter((a) => a !== asset));
   };
 

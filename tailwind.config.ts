@@ -17,6 +17,9 @@ module.exports = withUt({
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ["Poppins", "sans-serif"],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

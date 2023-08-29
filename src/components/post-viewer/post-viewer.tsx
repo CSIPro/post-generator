@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import { FC, RefObject, useContext, useRef, useState } from "react";
 import { IoLocationSharp, IoCalendarClear, IoTimeSharp } from "react-icons/io5";
+import { Rnd } from "react-rnd";
 
 import { PosterContext } from "@/context/poster";
 import { cn } from "@/lib/utils";
@@ -24,6 +26,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
     posterBg: { posterBg },
     topics: { topics },
     presenters: { presenters },
+    assets: { assets },
     date,
     time,
     posterForm,
@@ -71,6 +74,19 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
                 contextText,
               )}
             >
+              {assets.map((asset, index) => (
+                <Rnd
+                  key={`${asset.key} ${index}`}
+                  className="border-none p-4 hover:border hover:border-solid"
+                >
+                  <img
+                    src={asset.url}
+                    alt={asset.url}
+                    draggable="false"
+                    className="aspect-square w-full"
+                  />
+                </Rnd>
+              ))}
               <span className="absolute left-8 top-8 flex flex-row gap-2 text-5xl">
                 <h1>CSI PRO</h1>
                 {posterForm && posterForm?.watch("event")?.length > 0 && (
@@ -96,7 +112,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
                   {topics.map((topic, index) => (
                     <li
                       key={`Topic ${topic} ${index}`}
-                      className="flex flex-row"
+                      className="flex flex-row py-1"
                     >
                       <p>&#62; {topic}</p>
                     </li>
@@ -109,7 +125,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
                   {presenters.map((presenter, index) => (
                     <li
                       key={`Presenter ${presenter} ${index}`}
-                      className="flex flex-row"
+                      className="flex flex-row py-1"
                     >
                       <p>&#62; {presenter}</p>
                     </li>
@@ -119,7 +135,7 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
               <div className="w-1/2"></div>
               <div className="col-span-2 flex flex-col gap-2 pl-2">
                 <h1>Ubicación y fecha</h1>
-                <div className="gap-1pl-5 flex flex-col">
+                <div className="flex flex-col gap-1">
                   <span className="flex items-center gap-2">
                     <IoLocationSharp />
                     <p>{posterForm?.watch("location")}</p>
