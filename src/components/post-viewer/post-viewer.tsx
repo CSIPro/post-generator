@@ -77,7 +77,8 @@ export const PostViewer: FC<Props> = ({ postRef }) => {
               {assets.map((asset, index) => (
                 <Rnd
                   key={`${asset.key} ${index}`}
-                  className="border-none p-4 hover:border hover:border-solid"
+                  className="absolute z-10 p-4 hover:ring hover:ring-accent"
+                  lockAspectRatio={true}
                 >
                   <img
                     src={asset.url}

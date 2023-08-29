@@ -28,9 +28,9 @@ interface PosterContextProps {
   };
   assets: {
     assets: Asset[];
-    addAsset: (asset: Asset) => void;
-    removeAsset: (asset: Asset) => void;
-    setAssets: (assets: Asset[]) => void;
+    addAsset: (assetKey: string) => void;
+    removeAsset: (assetKey: string) => void;
+    setAssets: (assetKeys: Asset[]) => void;
   };
   date?: Date;
   time?: string;
@@ -108,12 +108,16 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     );
   };
 
-  const addAsset = (asset: Asset) => {
+  const addAsset = (assetKey: string) => {
+    const asset = assetsQuery.data?.find((a) => a.key === assetKey);
+
+    if (!asset) return;
+
     setAssets((prevAssets) => [...prevAssets, asset]);
   };
 
-  const removeAsset = (asset: Asset) => {
-    setAssets((prevAssets) => prevAssets.filter((a) => a !== asset));
+  const removeAsset = (assetKey: string) => {
+    setAssets((prevAssets) => prevAssets.filter((a) => a.key !== assetKey));
   };
 
   const providerValue = {

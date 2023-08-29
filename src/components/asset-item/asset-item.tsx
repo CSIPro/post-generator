@@ -14,6 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export interface Asset {
   key: string;
@@ -29,15 +30,16 @@ export const AssetItem: FC<AssetItemProps> = ({ asset }) => {
     assets: { assets, addAsset, removeAsset },
   } = useContext(PosterContext);
 
-  const handleRemoveAsset: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
-    // removeAsset(asset);
-  };
+  const isRendered = assets.some((a) => a.key === asset.key);
 
   return (
-    <div className="group relative flex h-full w-full items-center justify-center overflow-hidden bg-white bg-opacity-10">
-      <AssetActions asset={asset} isRendered={assets.includes(asset)} />
+    <div
+      className={cn(
+        "group relative flex h-full w-full items-center justify-center overflow-hidden bg-white bg-opacity-10",
+        `${isRendered && "ring-1 ring-accent"}`
+      )}
+    >
+      <AssetActions asset={asset} isRendered={isRendered} />
       <img
         src={asset.url}
         alt={`Uploaded asset ${asset.key}`}
@@ -60,13 +62,13 @@ const AssetActions: FC<AssetActionsProps> = ({ asset, isRendered }) => {
   const handleAddAsset: MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();
 
-    addAsset(asset);
+    addAsset(asset.key);
   };
 
   const handleRemoveAsset: MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();
 
-    removeAsset(asset);
+    removeAsset(asset.key);
   };
 
   return (
