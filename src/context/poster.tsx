@@ -1,58 +1,90 @@
-import {
-  FC,
-  ReactNode,
-  RefObject,
-  createContext,
-  useRef,
-  useState,
-} from "react";
+import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
+import { useQuery, type UseQueryResult } from "react-query";
 
-import { PostFormInputs } from "@/components/post-form/post-form";
+import { Asset } from "@/components/asset-item/asset-item";
+import type { ContentFormInputs } from "@/components/post-form/content-form";
+import { colorItemVariants } from "@/components/ui/color-item";
 
 interface PosterContextProps {
-  posterForm?: UseFormReturn<PostFormInputs, undefined, any>;
-  topics: string[];
-  presenters: string[];
-  pictures?: string[];
+  posterForm?: UseFormReturn<ContentFormInputs, undefined, any>;
+  assetsQuery?: UseQueryResult<Asset[], unknown>;
+  posterBg: {
+    posterBg: keyof typeof colorItemVariants;
+    setPosterBg: (color: keyof typeof colorItemVariants) => void;
+  };
+  topics: {
+    topics: string[];
+    addTopic: (topic: string) => void;
+    removeTopic: (topic: string) => void;
+    setTopics: (topics: string[]) => void;
+  };
+  presenters: {
+    presenters: string[];
+    addPresenter: (presenter: string) => void;
+    removePresenter: (presenter: string) => void;
+    setPresenters: (presenters: string[]) => void;
+  };
+  assets: {
+    assets: Asset[];
+    addAsset: (assetKey: string) => void;
+    removeAsset: (assetKey: string) => void;
+    setAssets: (assetKeys: Asset[]) => void;
+  };
   date?: Date;
   time?: string;
   setTime?: (time: string) => void;
   setDate: SelectSingleEventHandler;
-  addTopic: (topic: string) => void;
-  removeTopic: (topic: string) => void;
-  addPresenter: (presenter: string) => void;
-  removePresenter: (presenter: string) => void;
-  setTopics: (topics: string[]) => void;
-  setPresenters: (presenters: string[]) => void;
-  setPictures?: (pictures: string[]) => void;
 }
 
 export const PosterContext = createContext<PosterContextProps>({
-  topics: [],
-  presenters: [],
-  pictures: [],
+  posterBg: { posterBg: "primary", setPosterBg: (color) => {} },
+  topics: {
+    topics: [],
+    addTopic: (topic) => {},
+    removeTopic: (topic) => {},
+    setTopics: (topics) => {},
+  },
+  presenters: {
+    presenters: [],
+    addPresenter: (presenter) => {},
+    removePresenter: (presenter) => {},
+    setPresenters: (presenters) => {},
+  },
+  assets: {
+    assets: [],
+    addAsset: (asset) => {},
+    removeAsset: (asset) => {},
+    setAssets: (assets) => {},
+  },
   date: new Date(),
   setDate: () => {},
-  addTopic: (topic: string) => {},
-  removeTopic: (topic: string) => {},
-  addPresenter: (presenter: string) => {},
-  removePresenter: (presenter: string) => {},
-  setTopics: (topics: string[]) => {},
-  setPresenters: (presenters: string[]) => {},
-  setPictures: (pictures: string[]) => {},
 });
+
+const getAssets = async () => {
+  const res = await fetch("/api/images");
+
+  const data = (await res.json()) as Asset[];
+
+  return data;
+};
 
 export const PosterContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const assetsQuery = useQuery({ queryKey: ["assets"], queryFn: getAssets });
+
+  const [posterBg, setPosterBg] =
+    useState<keyof typeof colorItemVariants>("primary");
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
+
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
 
-  const posterForm = useForm<PostFormInputs>();
+  const posterForm = useForm<ContentFormInputs>();
 
   const addTopic = (topic: string) => {
     if (!topic) return;
@@ -76,20 +108,47 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     );
   };
 
+  const addAsset = (assetKey: string) => {
+    const asset = assetsQuery.data?.find((a) => a.key === assetKey);
+
+    if (!asset) return;
+
+    setAssets((prevAssets) => [...prevAssets, asset]);
+  };
+
+  const removeAsset = (assetKey: string) => {
+    setAssets((prevAssets) => prevAssets.filter((a) => a.key !== assetKey));
+  };
+
   const providerValue = {
     posterForm,
-    topics,
-    presenters,
+    assetsQuery,
+    posterBg: {
+      posterBg,
+      setPosterBg,
+    },
+    topics: {
+      topics,
+      addTopic,
+      removeTopic,
+      setTopics,
+    },
+    presenters: {
+      presenters,
+      addPresenter,
+      removePresenter,
+      setPresenters,
+    },
+    assets: {
+      assets,
+      addAsset,
+      removeAsset,
+      setAssets,
+    },
     date,
     time,
     setTime,
     setDate,
-    addTopic,
-    removeTopic,
-    addPresenter,
-    removePresenter,
-    setTopics,
-    setPresenters,
   };
 
   return (
