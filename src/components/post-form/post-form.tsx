@@ -2,6 +2,9 @@ import Link from "next/link";
 import { FC } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
+import { AssetsForm } from "./assets-form";
+import { ContentForm } from "./content-form";
+import { TemplateForm } from "./template-form";
 import {
   Accordion,
   AccordionContent,
@@ -10,10 +13,6 @@ import {
 } from "../ui/accordion";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
-
-import { AssetsForm } from "./assets-form";
-import { ContentForm } from "./content-form";
-import { TemplateForm } from "./template-form";
 
 interface Props {
   onDownload: () => void;

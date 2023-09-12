@@ -1,15 +1,12 @@
-import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { FC, ReactNode } from "react";
 
 import { FullNameEmphasis } from "@/components/ui/name-emphasis";
 
-const poppins = Poppins({ weight: ["400", "700"], subsets: ["latin"] });
-
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-center gap-6 bg-primary px-2 text-primary-foreground md:px-0 ${poppins.className}`}
+    <div
+      className={`flex min-h-screen w-full flex-col items-center justify-center gap-6 bg-primary px-2 text-primary-foreground md:px-0`}
     >
       <FullNameEmphasis>POST GENERATOR</FullNameEmphasis>
       <div className="grid w-full grid-cols-1 gap-2 px-2 md:w-2/3 md:grid-cols-2">
@@ -17,9 +14,9 @@ export default function Home() {
           Selecciona el tipo de post que quieres generar
         </h2>
         <HomeScreenLink href="/flyer">Posters</HomeScreenLink>
-        <HomeScreenLink href="#">Redes sociales</HomeScreenLink>
+        <HomeScreenLink href="/create-post">Redes sociales</HomeScreenLink>
       </div>
-    </main>
+    </div>
   );
 }
 

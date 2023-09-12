@@ -8,12 +8,11 @@ import { PosterContext } from "@/context/poster";
 import { cn } from "@/lib/utils";
 import { formatFullTemplateDate } from "@/utils/utils";
 
+import { ViewerControls } from "./viewer-controls";
 import { SocialMedia } from "../social-media/social-media";
 import { colorItemVariants } from "../ui/color-item";
 import { NameEmphasis } from "../ui/name-emphasis";
 import { ScrollArea } from "../ui/scroll-area";
-
-import { ViewerControls } from "./viewer-controls";
 
 interface Props {
   postRef: RefObject<HTMLDivElement>;
