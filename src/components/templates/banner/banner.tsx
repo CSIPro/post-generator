@@ -1,19 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, useContext, useRef } from "react";
+import { forwardRef, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 
-import { BannerFormInputs } from "./banner/banner-form";
-import { colorItemVariants } from "../ui/color-item";
+import { BannerFormInputs } from "./banner-form";
+import { colorItemVariants } from "../../ui/color-item";
 
 export interface PosterFormInputs {
   name: string;
 }
 
-export const Banner = () => {
-  const postRef = useRef<HTMLDivElement>(null);
+export const Banner = forwardRef<HTMLDivElement>(function Banner(props, ref) {
   const {
     primaryColor: { color },
   } = useContext(TemplateContext);
@@ -28,9 +27,9 @@ export const Banner = () => {
 
   return (
     <div
-      ref={postRef}
+      ref={ref}
       className={cn(
-        "relative flex h-[160px] max-w-[1080px] items-center gap-4 whitespace-nowrap pl-4 text-9xl transition-all",
+        "relative flex h-[160px] items-center gap-4 whitespace-nowrap pl-4 text-9xl transition-all",
         contextBg,
         contextText,
       )}
@@ -38,7 +37,7 @@ export const Banner = () => {
       <h1>CSI PRO</h1>
       <h1
         className={cn(
-          "h-full bg-white px-4 font-bold flex items-center uppercase tracking-wide",
+          "flex h-full items-center bg-white px-4 font-bold uppercase tracking-wide",
           nameEmphasis,
           nameEmphasisBg,
         )}
@@ -47,4 +46,4 @@ export const Banner = () => {
       </h1>
     </div>
   );
-};
+});

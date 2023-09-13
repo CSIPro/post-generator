@@ -5,7 +5,7 @@ import { UseQueryResult, useQuery } from "react-query";
 
 import { Asset } from "@/components/asset-item/asset-item";
 import { ContentForm } from "@/components/post-form/content-form";
-import { Banner } from "@/components/templates/banner";
+import { Banner } from "@/components/templates/banner/banner";
 import {
   BannerForm,
   BannerFormInputs,
