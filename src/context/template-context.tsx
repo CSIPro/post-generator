@@ -10,19 +10,15 @@ import {
   BannerForm,
   BannerFormInputs,
 } from "@/components/templates/banner/banner-form";
-import {
-  PostForm,
-  Poster,
-  PosterFormInputs,
-} from "@/components/templates/poster";
+import { Poster, PosterFormInputs } from "@/components/templates/poster";
 import { colorItemVariants } from "@/components/ui/color-item";
 
 export type TemplateVariants = "poster" | "banner";
 
 export interface Template {
   name: string;
-  template: FC<any>;
-  form: FC<any>;
+  template: FC;
+  form: FC;
 }
 
 export const templates: Record<TemplateVariants, Template> = {
@@ -72,29 +68,29 @@ interface TemplateContextProps {
 }
 
 export const TemplateContext = createContext<TemplateContextProps>({
-  setTemplate: (template) => {},
+  setTemplate: (_) => {},
   clearTemplate: () => {},
   primaryColor: {
     color: "primary",
-    setPrimaryColor: (color) => {},
+    setPrimaryColor: (_) => {},
   },
   topics: {
     topics: [],
-    addTopic: (topic) => {},
-    removeTopic: (topic) => {},
-    setTopics: (topics) => {},
+    addTopic: (_) => {},
+    removeTopic: (_) => {},
+    setTopics: (_) => {},
   },
   presenters: {
     presenters: [],
-    addPresenter: (presenter) => {},
-    removePresenter: (presenter) => {},
-    setPresenters: (presenters) => {},
+    addPresenter: (_) => {},
+    removePresenter: (_) => {},
+    setPresenters: (_) => {},
   },
   assets: {
     assets: [],
-    addAsset: (asset) => {},
-    removeAsset: (asset) => {},
-    setAssets: (assets) => {},
+    addAsset: (_) => {},
+    removeAsset: (_) => {},
+    setAssets: (_) => {},
   },
   date: new Date(),
   setDate: () => {},

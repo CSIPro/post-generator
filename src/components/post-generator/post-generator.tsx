@@ -3,7 +3,6 @@ import { useContext, useRef } from "react";
 
 import { TemplateContext, templates } from "@/context/template-context";
 
-import { ContentForm } from "../post-form/content-form";
 import { PostForm } from "../post-form/post-form";
 import { PostViewer } from "../post-viewer/post-viewer";
 

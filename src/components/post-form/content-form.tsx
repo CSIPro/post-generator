@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { useForm, useFormContext } from "react-hook-form";
 import { MdAdd, MdRemove } from "react-icons/md";
 
-import { PosterContext } from "@/context/poster";
 import { TemplateContext } from "@/context/template-context";
 
 import { Button } from "../ui/button";
@@ -40,7 +39,6 @@ export const ContentForm = () => {
   } = useForm<Pick<ContentFormInputs, "presenters">>();
 
   const {
-    template,
     topics: { topics, addTopic, removeTopic },
     presenters: { presenters, addPresenter, removePresenter },
     date,

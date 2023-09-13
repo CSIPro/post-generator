@@ -4,7 +4,6 @@ import { BiArrowBack } from "react-icons/bi";
 
 import { AssetsForm } from "./assets-form";
 import { ConfigForm } from "./config-form";
-import { ContentForm } from "./content-form";
 import {
   Accordion,
   AccordionContent,

@@ -1,6 +1,5 @@
 import { useContext } from "react";
 
-import { PosterContext } from "@/context/poster";
 import { TemplateContext } from "@/context/template-context";
 
 import { ColorItem } from "../ui/color-item";

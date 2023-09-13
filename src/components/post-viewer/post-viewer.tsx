@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { FC, RefObject, forwardRef, useContext, useRef, useState } from "react";
+import { forwardRef, useContext, useRef, useState } from "react";
 
 import { TemplateContext, templates } from "@/context/template-context";
 
 import { ViewerControls } from "./viewer-controls";
-import { Poster } from "../templates/poster";
 import { ScrollArea } from "../ui/scroll-area";
 
 // TODO: Fix image download on mobile
@@ -41,7 +40,7 @@ export const PostViewer = forwardRef<HTMLDivElement>(
           fitToViewer={fitToViewer}
           resetZoom={resetZoom}
         />
-        <div ref={viewerRef} className="flex h-full p-1 w-full">
+        <div ref={viewerRef} className="flex h-full w-full p-1">
           <ScrollArea>
             <div
               className="transition-transform"

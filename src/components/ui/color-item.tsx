@@ -1,6 +1,5 @@
 import { FC, useContext } from "react";
 
-import { PosterContext } from "@/context/poster";
 import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 

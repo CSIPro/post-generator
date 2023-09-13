@@ -39,24 +39,24 @@ interface PosterContextProps {
 }
 
 export const PosterContext = createContext<PosterContextProps>({
-  posterBg: { posterBg: "primary", setPosterBg: (color) => {} },
+  posterBg: { posterBg: "primary", setPosterBg: (_) => {} },
   topics: {
     topics: [],
-    addTopic: (topic) => {},
-    removeTopic: (topic) => {},
-    setTopics: (topics) => {},
+    addTopic: (_) => {},
+    removeTopic: (_) => {},
+    setTopics: (_) => {},
   },
   presenters: {
     presenters: [],
-    addPresenter: (presenter) => {},
-    removePresenter: (presenter) => {},
-    setPresenters: (presenters) => {},
+    addPresenter: (_) => {},
+    removePresenter: (_) => {},
+    setPresenters: (_) => {},
   },
   assets: {
     assets: [],
-    addAsset: (asset) => {},
-    removeAsset: (asset) => {},
-    setAssets: (assets) => {},
+    addAsset: (_) => {},
+    removeAsset: (_) => {},
+    setAssets: (_) => {},
   },
   date: new Date(),
   setDate: () => {},

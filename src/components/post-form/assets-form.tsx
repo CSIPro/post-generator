@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { useQueryClient } from "react-query";
 
-import { PosterContext } from "@/context/poster";
 import { TemplateContext } from "@/context/template-context";
 import { UploadDropzone } from "@/utils/uploadthing";
 

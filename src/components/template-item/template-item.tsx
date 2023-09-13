@@ -21,7 +21,7 @@ export const TemplateItem: FC<Props> = ({ variant, src, name }) => {
     <div
       onClick={() => setTemplate(variant)}
       className={cn(
-        "relative flex aspect-square cursor-pointer overflow-hidden flex-col items-center justify-center gap-2 rounded-sm bg-muted p-2 ring-1 ring-white transition-all hover:brightness-110",
+        "relative flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-muted p-2 ring-1 ring-white transition-all hover:brightness-110",
         selected && "ring-2 ring-accent",
       )}
     >

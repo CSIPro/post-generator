@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
-import { FC, forwardRef, useContext, useRef } from "react";
+import { FC, forwardRef, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { BiArrowBack } from "react-icons/bi";
 import { IoCalendarClear, IoLocationSharp, IoTimeSharp } from "react-icons/io5";

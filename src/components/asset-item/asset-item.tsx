@@ -5,7 +5,6 @@ import { CgRemoveR } from "react-icons/cg";
 import { MdAddBox, MdDelete } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
-import { PosterContext } from "@/context/poster";
 import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 
@@ -28,7 +27,7 @@ interface AssetItemProps {
 
 export const AssetItem: FC<AssetItemProps> = ({ asset }) => {
   const {
-    assets: { assets, addAsset, removeAsset },
+    assets: { assets },
   } = useContext(TemplateContext);
 
   const isRendered = assets.some((a) => a.key === asset.key);
