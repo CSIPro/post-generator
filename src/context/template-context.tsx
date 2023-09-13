@@ -35,10 +35,9 @@ export const templates: Record<TemplateVariants, Template> = {
 };
 
 interface TemplateContextProps {
-  template?: "poster" | "banner";
-  setTemplate: (template: "poster" | "banner") => void;
+  template?: TemplateVariants;
+  setTemplate: (template: TemplateVariants) => void;
   assetsQuery?: UseQueryResult<Asset[], unknown>;
-  clearTemplate: () => void;
   primaryColor: {
     color: keyof typeof colorItemVariants;
     setPrimaryColor: (color: keyof typeof colorItemVariants) => void;
@@ -69,7 +68,6 @@ interface TemplateContextProps {
 
 export const TemplateContext = createContext<TemplateContextProps>({
   setTemplate: (_) => {},
-  clearTemplate: () => {},
   primaryColor: {
     color: "primary",
     setPrimaryColor: (_) => {},
@@ -107,9 +105,7 @@ const getAssets = async () => {
 export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const assetsQuery = useQuery({ queryKey: ["assets"], queryFn: getAssets });
 
-  const [template, setTemplate] = useState<"poster" | "banner" | undefined>(
-    "banner",
-  );
+  const [template, setTemplate] = useState<TemplateVariants>("poster");
   const [primaryColor, setPrimaryColor] =
     useState<keyof typeof colorItemVariants>("primary");
   const form = useForm<PosterFormInputs | BannerFormInputs, undefined, any>();
@@ -120,8 +116,6 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
-
-  const clearTemplate = () => setTemplate(undefined);
 
   const addTopic = (topic: string) => {
     if (!topic) return;
@@ -160,7 +154,6 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const value = {
     template,
     setTemplate,
-    clearTemplate,
     assetsQuery,
     primaryColor: {
       color: primaryColor,

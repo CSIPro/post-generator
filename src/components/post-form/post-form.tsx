@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
@@ -19,8 +20,14 @@ interface Props {
 }
 
 export const PostForm: FC<Props> = ({ onDownload, children }) => {
+  const router = useRouter();
+
   const handleDownload = () => {
     onDownload();
+  };
+
+  const handleGoBack = () => {
+    router.back();
   };
 
   return (
@@ -28,12 +35,12 @@ export const PostForm: FC<Props> = ({ onDownload, children }) => {
       <ScrollArea className="relative flex h-full flex-col gap-1 overflow-auto">
         <div className="flex flex-col p-4">
           <div className="flex flex-row items-center gap-2">
-            <Link
-              href="/"
+            <Button
+              onClick={handleGoBack}
               className="flex h-8 items-center justify-center rounded-sm border border-white bg-muted px-2 text-lg transition-all hover:bg-primary"
             >
               <BiArrowBack />
-            </Link>
+            </Button>
             <h1 className="text-xl">Edita la plantilla</h1>
           </div>
           <Accordion type="single" collapsible>
