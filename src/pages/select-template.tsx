@@ -14,7 +14,7 @@ export default function CreatePostPage() {
   const handleEditTemplate = () => {
     if (!template) return;
 
-    router.push("/flyer");
+    router.push("/edit-template");
   };
 
   return (

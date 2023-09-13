@@ -13,7 +13,7 @@ export default function Home() {
         {/* <h2 className="col-span-full text-center text-base md:text-xl">
           Selecciona el tipo de post que quieres generar
         </h2> */}
-        <HomeScreenLink href="/create-post">Iniciar</HomeScreenLink>
+        <HomeScreenLink href="/select-template">Iniciar</HomeScreenLink>
       </div>
     </div>
   );
@@ -28,7 +28,7 @@ const HomeScreenLink: FC<LinkProps> = ({ href, children }) => {
   return (
     <Link
       href={href}
-      className="block rounded-sm bg-white px-4 py-2 text-center text-lg font-bold uppercase text-primary transition-all hover:bg-accent hover:text-white"
+      className="block rounded-sm bg-white px-4 py-2 text-center text-lg font-bold uppercase tracking-wider text-primary transition-all hover:bg-accent hover:text-xl hover:text-white"
     >
       {children}
     </Link>
