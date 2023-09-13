@@ -21,13 +21,18 @@ export const TemplateItem: FC<Props> = ({ variant, src, name }) => {
     <div
       onClick={() => setTemplate(variant)}
       className={cn(
-        "relative flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-muted p-2 ring-1 ring-white transition-all hover:brightness-110",
-        selected && "ring-2 ring-accent",
+        "relative flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-muted p-2 ring-1 ring-muted transition-all hover:ring-secondary hover:brightness-110",
+        selected && "ring-2 ring-accent hover:ring-accent",
       )}
     >
       <Image src={src} alt={name} height={160} width={160} />
       <div className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 bg-slate-900 bg-opacity-60 px-8 py-2 transition-all">
-        <p className={cn("text-center transition-all", selected && "text-lg")}>
+        <p
+          className={cn(
+            "text-center transition-all",
+            selected && "text-lg font-medium text-white",
+          )}
+        >
           {name}
         </p>
       </div>

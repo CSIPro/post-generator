@@ -4,7 +4,7 @@ import { TemplateItem } from "../template-item/template-item";
 
 export const TemplateSelector: FC = () => {
   return (
-    <div className="grid w-full grid-cols-2 grid-rows-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-6">
+    <div className="grid w-full grid-cols-2 grid-rows-2 gap-4 p-2 sm:grid-cols-3 md:grid-cols-6">
       <TemplateItem
         variant="poster"
         src="/assets/img/templates/poster.png"
