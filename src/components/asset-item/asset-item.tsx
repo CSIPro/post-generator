@@ -6,6 +6,7 @@ import { MdAddBox, MdDelete } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
 import { PosterContext } from "@/context/poster";
+import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
@@ -28,7 +29,7 @@ interface AssetItemProps {
 export const AssetItem: FC<AssetItemProps> = ({ asset }) => {
   const {
     assets: { assets, addAsset, removeAsset },
-  } = useContext(PosterContext);
+  } = useContext(TemplateContext);
 
   const isRendered = assets.some((a) => a.key === asset.key);
 
@@ -57,7 +58,7 @@ interface AssetActionsProps {
 const AssetActions: FC<AssetActionsProps> = ({ asset, isRendered }) => {
   const {
     assets: { addAsset, removeAsset },
-  } = useContext(PosterContext);
+  } = useContext(TemplateContext);
 
   const handleAddAsset: MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();

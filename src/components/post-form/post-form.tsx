@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
 import { AssetsForm } from "./assets-form";
+import { ConfigForm } from "./config-form";
 import { ContentForm } from "./content-form";
-import { TemplateForm } from "./template-form";
 import {
   Accordion,
   AccordionContent,
@@ -16,9 +16,10 @@ import { ScrollArea } from "../ui/scroll-area";
 
 interface Props {
   onDownload: () => void;
+  children: ReactNode;
 }
 
-export const PostForm: FC<Props> = ({ onDownload }) => {
+export const PostForm: FC<Props> = ({ onDownload, children }) => {
   const handleDownload = () => {
     onDownload();
   };
@@ -43,14 +44,12 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
             >
               <AccordionTrigger>Plantilla</AccordionTrigger>
               <AccordionContent>
-                <TemplateForm />
+                <ConfigForm />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="content-form" className="border-b-slate-400">
               <AccordionTrigger>Contenido</AccordionTrigger>
-              <AccordionContent>
-                <ContentForm />
-              </AccordionContent>
+              <AccordionContent>{children}</AccordionContent>
             </AccordionItem>
             <AccordionItem value="assets-form" className="border-b-slate-400">
               <AccordionTrigger>Recursos gráficos</AccordionTrigger>
@@ -71,26 +70,3 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
     </div>
   );
 };
-
-{
-  /* <div>
-          <form onSubmit={submitPicture(onSubmitPicture)}>
-            <Label htmlFor="picture">Imagen</Label>
-            <div className="flex flex-row items-center gap-2">
-              <Input
-                {...regPicture("picture")}
-                id="picture"
-                type="file"
-                accept="image/*"
-              />
-              <Button
-                size="icon"
-                type="submit"
-                className="text-lg transition-all hover:bg-primary hover:brightness-110"
-              >
-                <MdAdd />
-              </Button>
-            </div>
-          </form>
-        </div> */
-}

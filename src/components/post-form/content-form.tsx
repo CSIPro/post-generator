@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { MdAdd, MdRemove } from "react-icons/md";
 
 import { PosterContext } from "@/context/poster";
+import { TemplateContext } from "@/context/template-context";
 
 import { Button } from "../ui/button";
 import { DatePicker } from "../ui/date-picker";
@@ -39,13 +40,15 @@ export const ContentForm = () => {
   } = useForm<Pick<ContentFormInputs, "presenters">>();
 
   const {
-    posterForm,
+    template,
     topics: { topics, addTopic, removeTopic },
     presenters: { presenters, addPresenter, removePresenter },
     date,
     setTime,
     setDate,
-  } = useContext(PosterContext);
+  } = useContext(TemplateContext);
+
+  const { register } = useFormContext();
 
   const onSubmitContent = (data: Pick<ContentFormInputs, "topics">) => {
     addTopic(data.topics);
@@ -63,7 +66,7 @@ export const ContentForm = () => {
         <Label htmlFor="event">Evento</Label>
         <Input
           id="event"
-          {...posterForm?.register("event")}
+          {...register("event")}
           type="text"
           placeholder="Evento"
           className="text-muted"
@@ -73,7 +76,7 @@ export const ContentForm = () => {
         <Label htmlFor="title">Título</Label>
         <Input
           id="title"
-          {...posterForm?.register("title")}
+          {...register("title")}
           type="text"
           placeholder="Título"
           className="text-muted"
@@ -171,7 +174,7 @@ export const ContentForm = () => {
         <Label htmlFor="location">Ubicación</Label>
         <Input
           id="location"
-          {...posterForm?.register("location")}
+          {...register("location")}
           type="text"
           placeholder="Ubicación"
           className="text-muted"
