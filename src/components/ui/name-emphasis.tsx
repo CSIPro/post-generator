@@ -1,6 +1,6 @@
 import { FC, ReactNode, useContext } from "react";
 
-import { PosterContext } from "@/context/poster";
+import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 
 import { colorItemVariants } from "./color-item";
@@ -22,14 +22,15 @@ export const FullNameEmphasis: FC<Props> = ({ children }) => {
 
 export const NameEmphasis: FC<Props> = ({ children }) => {
   const {
-    posterBg: { posterBg },
-  } = useContext(PosterContext);
+    primaryColor: { color },
+  } = useContext(TemplateContext);
 
   return (
     <h1
       className={cn(
-        "bg-white px-2 font-bold uppercase tracking-wider",
-        colorItemVariants[posterBg].nameEmphasis,
+        "bg-white px-2 font-bold uppercase tracking-wider transition-all",
+        colorItemVariants[color].nameEmphasis,
+        colorItemVariants[color].nameEmphasisBg,
       )}
     >
       {children}

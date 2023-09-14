@@ -86,8 +86,9 @@ export const Poster = forwardRef<HTMLDivElement>(function Poster(props, ref) {
           {watch("title")?.length > 0 && (
             <h1
               className={cn(
-                "bg-white px-4 py-2 text-center text-7xl font-bold",
+                "bg-white px-4 py-2 text-center text-7xl font-bold transition-all",
                 nameEmphasis,
+                colorItemVariants[color].nameEmphasisBg,
               )}
             >
               {watch("title")}
