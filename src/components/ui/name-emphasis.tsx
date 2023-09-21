@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, ReactNode, useContext } from "react";
 
 import { TemplateContext } from "@/context/template-context";

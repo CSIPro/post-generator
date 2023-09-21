@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { UseFormReturn, useForm } from "react-hook-form";
