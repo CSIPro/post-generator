@@ -4,7 +4,12 @@ import Link from "next/link";
 import { FC, forwardRef, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { BiArrowBack } from "react-icons/bi";
-import { IoCalendarClear, IoLocationSharp, IoTimeSharp } from "react-icons/io5";
+import {
+  IoCalendarClear,
+  IoLocationSharp,
+  IoTimeSharp,
+  IoPerson,
+} from "react-icons/io5";
 import { Rnd } from "react-rnd";
 
 import { TemplateContext } from "@/context/template-context";
@@ -75,7 +80,7 @@ export const Poster = forwardRef<HTMLDivElement>(function Poster(props, ref) {
           />
         </Rnd>
       ))}
-      <span className="absolute left-8 top-8 flex flex-row gap-2 text-5xl">
+      <span className="absolute left-8 top-8 flex flex-row items-center gap-2 text-5xl">
         <h1>CSI PRO</h1>
         {watch("event")?.length > 0 && (
           <NameEmphasis>{watch("event")}</NameEmphasis>
@@ -111,9 +116,10 @@ export const Poster = forwardRef<HTMLDivElement>(function Poster(props, ref) {
           {presenters.map((presenter, index) => (
             <li
               key={`Presenter ${presenter} ${index}`}
-              className="flex flex-row py-1"
+              className="flex items-center gap-2 py-1"
             >
-              <p>&#62; {presenter}</p>
+              <IoPerson />
+              <p>{presenter}</p>
             </li>
           ))}
         </ul>

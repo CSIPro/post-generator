@@ -28,7 +28,7 @@ export const NameEmphasis: FC<Props> = ({ children }) => {
   return (
     <h1
       className={cn(
-        "bg-white px-2 font-bold uppercase tracking-wider transition-all",
+        "bg-white px-2 py-1 font-bold uppercase tracking-wider transition-all",
         colorItemVariants[color].nameEmphasis,
         colorItemVariants[color].nameEmphasisBg,
       )}
