@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`flex min-h-screen flex-col items-center justify-between font-sans text-white ${poppins.variable} ${fira.variable} ${roboto.variable}`}
+        className={`font-sans text-white ${poppins.variable} ${fira.variable} ${roboto.variable}`}
       >
         <ReactQueryProvider>
           <TemplateProvider>
