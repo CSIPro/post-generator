@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { FC, ReactNode } from "react";
 import { BiArrowBack } from "react-icons/bi";
 

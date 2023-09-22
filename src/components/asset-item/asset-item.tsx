@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import { FC, MouseEventHandler, useContext } from "react";
 import { IconContext } from "react-icons";

@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import { forwardRef, useContext } from "react";
 import { useFormContext } from "react-hook-form";

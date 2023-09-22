@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext } from "react";
 
 import { TemplateContext } from "@/context/template-context";
