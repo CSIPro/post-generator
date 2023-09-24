@@ -15,6 +15,11 @@ export const TemplateSelector: FC = () => {
         src="/assets/img/templates/INSIGHTS.png"
         name="Banner"
       />
+      <TemplateItem
+        variant="poster-rev"
+        src="/assets/img/templates/poster-rev.png"
+        name="Poster 2.0"
+      />
       {/* <TemplateItem
         variant="banner"
         src="/assets/img/templates/INSIGHTS.png"

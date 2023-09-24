@@ -1,24 +1,62 @@
+"use client";
+
 import { toPng } from "html-to-image";
-import { useContext, useRef } from "react";
+import { FC, ForwardRefExoticComponent, RefAttributes, useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { TemplateContext, templates } from "@/context/template-context";
-
+import { ContentForm } from "../post-form/content-form";
 import { PostForm } from "../post-form/post-form";
 import { PostViewer } from "../post-viewer/post-viewer";
+import { TemplateVariant } from "../template-item/template-item";
+import { Banner } from "../templates/banner/banner";
+import { BannerForm, BannerFormInputs } from "../templates/banner/banner-form";
+import { Poster, PosterFormInputs } from "../templates/poster";
+import { PosterRevamped } from "../templates/poster-rev/poster-rev";
 
-export const PostGenerator = () => {
+type FormInputs = PosterFormInputs | BannerFormInputs;
+
+interface Template {
+  name: string;
+  template: ForwardRefExoticComponent<RefAttributes<HTMLDivElement>>;
+  form: FC;
+}
+
+interface Props {
+  template: TemplateVariant;
+}
+
+const templates: Record<TemplateVariant, Template> = {
+  poster: {
+    name: "Poster",
+    template: Poster,
+    form: ContentForm,
+  },
+  banner: {
+    name: "Banner",
+    template: Banner,
+    form: BannerForm,
+  },
+  "poster-rev": {
+    name: "Poster 2.0",
+    template: PosterRevamped,
+    form: ContentForm,
+  },
+};
+
+export const PostGenerator: FC<Props> = ({ template }) => {
   const postRef = useRef<HTMLDivElement>(null);
-  const { template } = useContext(TemplateContext);
+
+  const postForm = useForm<FormInputs>();
 
   const handlePostDownload = async () => {
     if (postRef.current === null) return;
 
-    const size = postRef.current.getBoundingClientRect();
+    const { offsetHeight, offsetWidth } = postRef.current;
 
     const postLink = await toPng(postRef.current, {
       cacheBust: true,
-      canvasWidth: size.width,
-      canvasHeight: size.height,
+      canvasHeight: offsetHeight,
+      canvasWidth: offsetWidth,
     });
 
     const now = new Date().getTime();
@@ -29,14 +67,29 @@ export const PostGenerator = () => {
     downloadLink.click();
   };
 
-  const { form: Form } = templates[template!];
+  const getCurrentTemplateOffset = () => {
+    if (postRef.current === null) return;
+
+    const { offsetWidth, offsetHeight } = postRef.current;
+
+    return {
+      width: offsetWidth,
+      height: offsetHeight,
+    };
+  };
+
+  const { form: Form, template: Template } = templates[template];
 
   return (
     <section className="grid w-full grid-cols-1 grid-rows-2 md:grid-cols-5 md:grid-rows-1">
-      <PostViewer ref={postRef} />
-      <PostForm onDownload={handlePostDownload}>
-        <Form />
-      </PostForm>
+      <FormProvider {...postForm}>
+        <PostViewer onFitToViewer={getCurrentTemplateOffset}>
+          <Template ref={postRef} />
+        </PostViewer>
+        <PostForm onDownload={handlePostDownload}>
+          <Form />
+        </PostForm>
+      </FormProvider>
     </section>
   );
 };

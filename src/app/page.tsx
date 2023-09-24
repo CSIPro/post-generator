@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 
 import { FullNameEmphasis } from "@/components/ui/name-emphasis";
 
-export default function Home() {
+export default function Page() {
   return (
     <div
       className={`flex min-h-screen w-full flex-col items-center justify-center gap-6 bg-primary px-2 text-primary-foreground md:px-0`}

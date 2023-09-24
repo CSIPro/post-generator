@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext } from "react";
 import { useForm, useFormContext } from "react-hook-form";
 import { MdAdd, MdRemove } from "react-icons/md";

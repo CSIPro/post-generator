@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
 import { FormProvider, useForm } from "react-hook-form";
@@ -35,6 +37,7 @@ export const templates: Record<TemplateVariants, Template> = {
 };
 
 interface TemplateContextProps {
+  clearContext: () => void;
   template?: TemplateVariants;
   setTemplate: (template: TemplateVariants) => void;
   assetsQuery?: UseQueryResult<Asset[], unknown>;
@@ -67,6 +70,7 @@ interface TemplateContextProps {
 }
 
 export const TemplateContext = createContext<TemplateContextProps>({
+  clearContext: () => {},
   setTemplate: (_) => {},
   primaryColor: {
     color: "primary",
@@ -95,9 +99,11 @@ export const TemplateContext = createContext<TemplateContextProps>({
 });
 
 const getAssets = async () => {
-  const res = await fetch("/api/images");
+  const res = await fetch("/api/assets");
+  console.log(res);
 
   const data = (await res.json()) as Asset[];
+  console.log(data);
 
   return data;
 };
@@ -108,7 +114,7 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [template, setTemplate] = useState<TemplateVariants>("poster");
   const [primaryColor, setPrimaryColor] =
     useState<keyof typeof colorItemVariants>("primary");
-  const form = useForm<PosterFormInputs | BannerFormInputs, undefined, any>();
+  const form = useForm<PosterFormInputs | BannerFormInputs>();
 
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
@@ -151,7 +157,18 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setAssets((prevAssets) => prevAssets.filter((a) => a.key !== assetKey));
   };
 
+  const clearContext = () => {
+    setTemplate("poster");
+    setPrimaryColor("primary");
+    setTopics([]);
+    setPresenters([]);
+    setAssets([]);
+    setDate(undefined);
+    setTime(undefined);
+  };
+
   const value = {
+    clearContext,
     template,
     setTemplate,
     assetsQuery,

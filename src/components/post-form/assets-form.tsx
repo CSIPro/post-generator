@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext } from "react";
 import { useQueryClient } from "react-query";
 
@@ -46,6 +48,11 @@ export const AssetsForm = () => {
             {assetsQuery?.isLoading && (
               <p className="col-span-full row-span-full text-center">
                 Loading...
+              </p>
+            )}
+            {!assetsQuery?.isLoading && assetsQuery?.isError && (
+              <p className="col-span-full row-span-full text-center">
+                Ocurrió un error al cargar los archivos
               </p>
             )}
             {assetsQuery?.data &&

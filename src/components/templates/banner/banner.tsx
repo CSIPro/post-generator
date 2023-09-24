@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import { forwardRef, useContext } from "react";
 import { useFormContext } from "react-hook-form";
@@ -29,7 +31,7 @@ export const Banner = forwardRef<HTMLDivElement>(function Banner(props, ref) {
     <div
       ref={ref}
       className={cn(
-        "relative flex h-[160px] items-center gap-4 whitespace-nowrap pl-4 text-9xl transition-all",
+        "relative flex h-[160px] w-fit items-center gap-4 whitespace-nowrap pl-4 text-9xl transition-all",
         contextBg,
         contextText,
       )}
@@ -37,9 +39,10 @@ export const Banner = forwardRef<HTMLDivElement>(function Banner(props, ref) {
       <h1>CSI PRO</h1>
       <h1
         className={cn(
-          "flex h-full items-center bg-white px-4 font-bold uppercase tracking-wide transition-all",
+          "flex items-center bg-white px-4 font-bold uppercase tracking-wide transition-all",
           nameEmphasis,
           nameEmphasisBg,
+          !!watch("title") && "h-full",
         )}
       >
         {watch("title")}

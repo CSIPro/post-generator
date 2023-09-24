@@ -1,6 +1,10 @@
-import { useRouter } from "next/router";
-import { FC, ReactNode } from "react";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { FC, ReactNode, useContext } from "react";
 import { BiArrowBack } from "react-icons/bi";
+
+import { TemplateContext } from "@/context/template-context";
 
 import { AssetsForm } from "./assets-form";
 import { ConfigForm } from "./config-form";
@@ -21,11 +25,14 @@ interface Props {
 export const PostForm: FC<Props> = ({ onDownload, children }) => {
   const router = useRouter();
 
+  const { clearContext } = useContext(TemplateContext);
+
   const handleDownload = () => {
     onDownload();
   };
 
   const handleGoBack = () => {
+    clearContext();
     router.back();
   };
 

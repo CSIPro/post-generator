@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { FC, useContext } from "react";
+import Link from "next/link";
+import { FC } from "react";
 
-import { TemplateContext } from "@/context/template-context";
 import { cn } from "@/lib/utils";
 
-export type TemplateVariant = "poster" | "banner";
+export type TemplateVariant = "poster" | "banner" | "poster-rev";
 
 interface Props {
   variant: TemplateVariant;
@@ -13,29 +13,17 @@ interface Props {
 }
 
 export const TemplateItem: FC<Props> = ({ variant, src, name }) => {
-  const { template, setTemplate } = useContext(TemplateContext);
-
-  const selected = template === variant;
-
   return (
-    <div
-      onClick={() => setTemplate(variant)}
+    <Link
+      href={`/templates/${variant}`}
       className={cn(
-        "relative flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-muted p-2 ring-1 ring-muted transition-all hover:ring-secondary hover:brightness-110",
-        selected && "ring-2 ring-accent hover:ring-accent",
+        "relative flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-muted p-2 ring-2 ring-secondary transition-all hover:ring-4 hover:brightness-110",
       )}
     >
       <Image src={src} alt={name} height={160} width={160} />
       <div className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 bg-slate-900 bg-opacity-60 px-8 py-2 transition-all">
-        <p
-          className={cn(
-            "text-center transition-all",
-            selected && "text-lg font-medium text-white",
-          )}
-        >
-          {name}
-        </p>
+        <p className={cn("text-center transition-all")}>{name}</p>
       </div>
-    </div>
+    </Link>
   );
 };
