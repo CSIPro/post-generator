@@ -11,7 +11,6 @@ interface Props {
   onFitToViewer: () => { height: number; width: number } | undefined;
 }
 
-// TODO: Fix image download on mobile
 export const PostViewer: FC<Props> = ({ onFitToViewer, children }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +40,7 @@ export const PostViewer: FC<Props> = ({ onFitToViewer, children }) => {
   };
 
   return (
-    <div className="relative col-span-3 max-h-96 bg-slate-800 text-white md:max-h-screen">
+    <div className="relative col-span-3 row-span-1 max-h-96 bg-slate-800 text-white md:max-h-screen">
       <ViewerControls
         zoom={zoom}
         handleZoom={handleZoom}

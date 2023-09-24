@@ -39,7 +39,7 @@ export const Banner = forwardRef<HTMLDivElement>(function Banner(props, ref) {
       <h1>CSI PRO</h1>
       <h1
         className={cn(
-          "flex items-center bg-white px-4 font-bold uppercase tracking-wide transition-all",
+          "flex items-center whitespace-nowrap bg-white px-4 font-bold uppercase tracking-wide transition-all",
           nameEmphasis,
           nameEmphasisBg,
           !!watch("title") && "h-full",

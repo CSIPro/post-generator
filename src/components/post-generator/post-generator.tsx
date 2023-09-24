@@ -57,6 +57,7 @@ export const PostGenerator: FC<Props> = ({ template }) => {
       cacheBust: true,
       canvasHeight: offsetHeight,
       canvasWidth: offsetWidth,
+      pixelRatio: 1,
     });
 
     const now = new Date().getTime();
@@ -81,7 +82,7 @@ export const PostGenerator: FC<Props> = ({ template }) => {
   const { form: Form, template: Template } = templates[template];
 
   return (
-    <section className="grid w-full grid-cols-1 grid-rows-2 md:grid-cols-5 md:grid-rows-1">
+    <section className="grid w-full grid-cols-1 md:grid-cols-5 md:grid-rows-1">
       <FormProvider {...postForm}>
         <PostViewer onFitToViewer={getCurrentTemplateOffset}>
           <Template ref={postRef} />

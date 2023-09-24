@@ -37,7 +37,7 @@ export const PostForm: FC<Props> = ({ onDownload, children }) => {
   };
 
   return (
-    <div className="relative col-span-2 h-screen w-full overflow-hidden bg-muted text-white">
+    <div className="relative col-span-2 row-span-1 h-screen w-full overflow-hidden bg-muted text-white">
       <ScrollArea className="relative flex h-full flex-col gap-1 overflow-auto">
         <div className="flex flex-col p-4">
           <div className="flex flex-row items-center gap-2">
