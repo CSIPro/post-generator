@@ -37,6 +37,7 @@ export const templates: Record<TemplateVariants, Template> = {
 };
 
 interface TemplateContextProps {
+  clearContext: () => void;
   template?: TemplateVariants;
   setTemplate: (template: TemplateVariants) => void;
   assetsQuery?: UseQueryResult<Asset[], unknown>;
@@ -69,6 +70,7 @@ interface TemplateContextProps {
 }
 
 export const TemplateContext = createContext<TemplateContextProps>({
+  clearContext: () => {},
   setTemplate: (_) => {},
   primaryColor: {
     color: "primary",
@@ -153,7 +155,18 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setAssets((prevAssets) => prevAssets.filter((a) => a.key !== assetKey));
   };
 
+  const clearContext = () => {
+    setTemplate("poster");
+    setPrimaryColor("primary");
+    setTopics([]);
+    setPresenters([]);
+    setAssets([]);
+    setDate(undefined);
+    setTime(undefined);
+  };
+
   const value = {
+    clearContext,
     template,
     setTemplate,
     assetsQuery,

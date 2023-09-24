@@ -11,6 +11,7 @@ import { TemplateVariant } from "../template-item/template-item";
 import { Banner } from "../templates/banner/banner";
 import { BannerForm, BannerFormInputs } from "../templates/banner/banner-form";
 import { Poster, PosterFormInputs } from "../templates/poster";
+import { PosterRevamped } from "../templates/poster-rev/poster-rev";
 
 type FormInputs = PosterFormInputs | BannerFormInputs;
 
@@ -34,6 +35,11 @@ const templates: Record<TemplateVariant, Template> = {
     name: "Banner",
     template: Banner,
     form: BannerForm,
+  },
+  "poster-rev": {
+    name: "Poster 2.0",
+    template: PosterRevamped,
+    form: ContentForm,
   },
 };
 

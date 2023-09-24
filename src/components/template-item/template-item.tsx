@@ -4,7 +4,7 @@ import { FC } from "react";
 
 import { cn } from "@/lib/utils";
 
-export type TemplateVariant = "poster" | "banner";
+export type TemplateVariant = "poster" | "banner" | "poster-rev";
 
 interface Props {
   variant: TemplateVariant;
