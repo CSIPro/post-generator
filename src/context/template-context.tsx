@@ -112,7 +112,7 @@ export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [template, setTemplate] = useState<TemplateVariants>("poster");
   const [primaryColor, setPrimaryColor] =
     useState<keyof typeof colorItemVariants>("primary");
-  const form = useForm<PosterFormInputs | BannerFormInputs, undefined, any>();
+  const form = useForm<PosterFormInputs | BannerFormInputs>();
 
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
