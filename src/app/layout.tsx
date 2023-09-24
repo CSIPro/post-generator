@@ -1,9 +1,12 @@
 import "@/styles/globals.css";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Fira_Mono, Poppins, Roboto } from "next/font/google";
+import { extractRouterConfig } from "uploadthing/server";
 
-import { PosterContextProvider } from "@/context/poster";
 import { ReactQueryProvider } from "@/context/react-query";
 import { TemplateProvider } from "@/context/template-context";
+
+import { ourFileRouter } from "./api/uploadthing/core";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,7 +38,8 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <TemplateProvider>
-            <PosterContextProvider>{children}</PosterContextProvider>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            {children}
           </TemplateProvider>
         </ReactQueryProvider>
       </body>
