@@ -8,10 +8,11 @@ import { ScrollArea } from "../ui/scroll-area";
 
 interface Props {
   children: ReactNode;
+  onFitToViewer: () => { height: number; width: number } | undefined;
 }
 
 // TODO: Fix image download on mobile
-export const PostViewer: FC<Props> = ({ children }) => {
+export const PostViewer: FC<Props> = ({ onFitToViewer, children }) => {
   const viewerRef = useRef<HTMLDivElement>(null);
 
   const [zoom, setZoom] = useState(1);
@@ -25,7 +26,14 @@ export const PostViewer: FC<Props> = ({ children }) => {
 
     const { width, height } = viewerRef.current.getBoundingClientRect();
 
-    setZoom(Math.min((width - 24) / 1080, (height - 24) / 1080));
+    const offset = onFitToViewer();
+
+    setZoom(
+      Math.min(
+        (width - 24) / (offset?.width ?? 1080),
+        (height - 24) / (offset?.height ?? 1080),
+      ),
+    );
   };
 
   const resetZoom = () => {
@@ -40,8 +48,8 @@ export const PostViewer: FC<Props> = ({ children }) => {
         fitToViewer={fitToViewer}
         resetZoom={resetZoom}
       />
-      <div ref={viewerRef} className="flex h-full w-full p-1">
-        <ScrollArea>
+      <div ref={viewerRef} className="flex h-full min-w-full p-1">
+        <ScrollArea className="h-full w-full">
           <div
             className="transition-transform"
             style={{

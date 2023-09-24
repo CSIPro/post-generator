@@ -45,12 +45,12 @@ export const PostGenerator: FC<Props> = ({ template }) => {
   const handlePostDownload = async () => {
     if (postRef.current === null) return;
 
-    const size = postRef.current.getBoundingClientRect();
+    const { offsetHeight, offsetWidth } = postRef.current;
 
     const postLink = await toPng(postRef.current, {
       cacheBust: true,
-      canvasWidth: size.width,
-      canvasHeight: size.height,
+      canvasHeight: offsetHeight,
+      canvasWidth: offsetWidth,
     });
 
     const now = new Date().getTime();
@@ -61,12 +61,23 @@ export const PostGenerator: FC<Props> = ({ template }) => {
     downloadLink.click();
   };
 
+  const getCurrentTemplateOffset = () => {
+    if (postRef.current === null) return;
+
+    const { offsetWidth, offsetHeight } = postRef.current;
+
+    return {
+      width: offsetWidth,
+      height: offsetHeight,
+    };
+  };
+
   const { form: Form, template: Template } = templates[template];
 
   return (
     <section className="grid w-full grid-cols-1 grid-rows-2 md:grid-cols-5 md:grid-rows-1">
       <FormProvider {...postForm}>
-        <PostViewer>
+        <PostViewer onFitToViewer={getCurrentTemplateOffset}>
           <Template ref={postRef} />
         </PostViewer>
         <PostForm onDownload={handlePostDownload}>
