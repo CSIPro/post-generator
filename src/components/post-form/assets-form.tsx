@@ -50,6 +50,11 @@ export const AssetsForm = () => {
                 Loading...
               </p>
             )}
+            {!assetsQuery?.isLoading && assetsQuery?.isError && (
+              <p className="col-span-full row-span-full text-center">
+                Ocurrió un error al cargar los archivos
+              </p>
+            )}
             {assetsQuery?.data &&
               assetsQuery.data.map((asset, index) => (
                 <AssetItem key={`Asset ${asset.key} ${index}`} asset={asset} />
