@@ -1,5 +1,7 @@
 import { utapi } from "uploadthing/server";
 
+export const revalidate = 0;
+
 export async function GET(_: Request) {
   const files = await utapi.listFiles();
 
