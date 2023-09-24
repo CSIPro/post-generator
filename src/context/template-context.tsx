@@ -99,9 +99,11 @@ export const TemplateContext = createContext<TemplateContextProps>({
 });
 
 const getAssets = async () => {
-  const res = await fetch("/api/images");
+  const res = await fetch("/api/assets");
+  console.log(res);
 
   const data = (await res.json()) as Asset[];
+  console.log(data);
 
   return data;
 };
