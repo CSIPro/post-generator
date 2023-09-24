@@ -43,8 +43,8 @@ export const AssetsForm = () => {
             }}
           />
         </div>
-        <ScrollArea className="rounded-sm border border-primary bg-slate-950">
-          <div className="grid h-60 items-start justify-start gap-2 p-2 md:grid-cols-3 md:grid-rows-2">
+        <ScrollArea className="h-60 rounded-sm border border-primary bg-slate-950">
+          <div className="grid grid-cols-2 grid-rows-1 gap-2 p-2 md:grid-cols-3">
             {assetsQuery?.isLoading && (
               <p className="col-span-full row-span-full text-center">
                 Loading...

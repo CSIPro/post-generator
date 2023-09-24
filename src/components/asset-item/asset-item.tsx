@@ -1,10 +1,10 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { FC, MouseEventHandler, useContext } from "react";
 import { IconContext } from "react-icons";
 import { CgRemoveR } from "react-icons/cg";
-import { MdAddBox, MdDelete } from "react-icons/md";
+import { MdAddBox } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
 import { TemplateContext } from "@/context/template-context";
@@ -37,15 +37,16 @@ export const AssetItem: FC<AssetItemProps> = ({ asset }) => {
   return (
     <div
       className={cn(
-        "group relative flex h-full w-full items-center justify-center overflow-hidden bg-white bg-opacity-10",
-        `${isRendered && "ring-1 ring-accent"}`,
+        "group relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-white bg-opacity-10 p-2",
+        `${isRendered && "ring-2 ring-secondary"}`,
       )}
     >
       <AssetActions asset={asset} isRendered={isRendered} />
-      <img
+      <Image
         src={asset.url}
         alt={`Uploaded asset ${asset.key}`}
-        className="object-contain"
+        height={120}
+        width={120}
       />
     </div>
   );
@@ -78,7 +79,7 @@ const AssetActions: FC<AssetActionsProps> = ({ asset, isRendered }) => {
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="absolute right-2 top-2 bg-black opacity-25 transition-all group-hover:opacity-100"
+          className="absolute right-2 top-2 bg-black opacity-25 transition-all hover:bg-secondary group-hover:opacity-100"
         >
           <Button
             variant="outline"
@@ -92,11 +93,12 @@ const AssetActions: FC<AssetActionsProps> = ({ asset, isRendered }) => {
           <DropdownMenuContent className="bg-black text-white">
             <DropdownMenuItem
               onClick={isRendered ? handleRemoveAsset : handleAddAsset}
+              className="cursor-pointer"
             >
               {isRendered ? <CgRemoveR /> : <MdAddBox />}
               <span>{isRendered ? "Quitar" : "Agregar"}</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="group/delete-item text-red-500 transition-all">
+            {/* <DropdownMenuItem className="group/delete-item text-red-500 transition-all">
               <IconContext.Provider
                 value={{
                   className:
@@ -106,7 +108,7 @@ const AssetActions: FC<AssetActionsProps> = ({ asset, isRendered }) => {
                 <MdDelete />
                 <span>Eliminar</span>
               </IconContext.Provider>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </IconContext.Provider>
       </DropdownMenu>

@@ -14,7 +14,7 @@ interface Props {
 export const FullNameEmphasis: FC<Props> = ({ children }) => {
   return (
     <span
-      className={`flex flex-row gap-2 whitespace-nowrap text-xl md:text-5xl`}
+      className={`flex flex-row items-center gap-2 whitespace-nowrap text-xl md:text-5xl`}
     >
       <h1>CSI PRO</h1>
       <NameEmphasis>{children}</NameEmphasis>
@@ -30,7 +30,7 @@ export const NameEmphasis: FC<Props> = ({ children }) => {
   return (
     <h1
       className={cn(
-        "bg-white px-2 py-1 font-bold uppercase tracking-wider transition-all",
+        "bg-white px-2 font-bold uppercase tracking-wider transition-all md:px-2 md:py-1",
         colorItemVariants[color].nameEmphasis,
         colorItemVariants[color].nameEmphasisBg,
       )}
