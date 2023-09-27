@@ -1,18 +1,49 @@
+"use client";
+
 import { FC, ReactNode, createContext, useState } from "react";
 import type { SelectSingleEventHandler } from "react-day-picker";
-import { UseFormReturn, useForm } from "react-hook-form";
-import { useQuery, type UseQueryResult } from "react-query";
+import { FormProvider, useForm } from "react-hook-form";
+import { UseQueryResult, useQuery } from "react-query";
 
 import { Asset } from "@/components/asset-item/asset-item";
-import type { ContentFormInputs } from "@/components/post-form/content-form";
+import { ContentForm } from "@/components/post-form/content-form";
+import { Banner } from "@/components/templates/banner/banner";
+import {
+  BannerForm,
+  BannerFormInputs,
+} from "@/components/templates/banner/banner-form";
+import { Poster, PosterFormInputs } from "@/components/templates/poster";
 import { colorItemVariants } from "@/components/ui/color-item";
 
-interface PosterContextProps {
-  posterForm?: UseFormReturn<ContentFormInputs, undefined, any>;
+export type TemplateVariants = "poster" | "banner";
+
+export interface Template {
+  name: string;
+  template: FC;
+  form: FC;
+}
+
+export const templates: Record<TemplateVariants, Template> = {
+  poster: {
+    name: "Poster",
+    template: Poster,
+    form: ContentForm,
+  },
+  banner: {
+    name: "Banner",
+    template: Banner,
+    form: BannerForm,
+  },
+};
+
+interface TemplateContextProps {
+  clearContext: () => void;
+  template?: TemplateVariants;
+  setTemplate: (template: TemplateVariants) => void;
   assetsQuery?: UseQueryResult<Asset[], unknown>;
-  posterBg: {
-    posterBg: keyof typeof colorItemVariants;
-    setPosterBg: (color: keyof typeof colorItemVariants) => void;
+  primaryColor: {
+    color: keyof typeof colorItemVariants;
+    setPrimaryColor: (color: keyof typeof colorItemVariants) => void;
   };
   topics: {
     topics: string[];
@@ -38,53 +69,59 @@ interface PosterContextProps {
   setDate: SelectSingleEventHandler;
 }
 
-export const PosterContext = createContext<PosterContextProps>({
-  posterBg: { posterBg: "primary", setPosterBg: (color) => {} },
+export const TemplateContext = createContext<TemplateContextProps>({
+  clearContext: () => {},
+  setTemplate: (_) => {},
+  primaryColor: {
+    color: "primary",
+    setPrimaryColor: (_) => {},
+  },
   topics: {
     topics: [],
-    addTopic: (topic) => {},
-    removeTopic: (topic) => {},
-    setTopics: (topics) => {},
+    addTopic: (_) => {},
+    removeTopic: (_) => {},
+    setTopics: (_) => {},
   },
   presenters: {
     presenters: [],
-    addPresenter: (presenter) => {},
-    removePresenter: (presenter) => {},
-    setPresenters: (presenters) => {},
+    addPresenter: (_) => {},
+    removePresenter: (_) => {},
+    setPresenters: (_) => {},
   },
   assets: {
     assets: [],
-    addAsset: (asset) => {},
-    removeAsset: (asset) => {},
-    setAssets: (assets) => {},
+    addAsset: (_) => {},
+    removeAsset: (_) => {},
+    setAssets: (_) => {},
   },
   date: new Date(),
   setDate: () => {},
 });
 
 const getAssets = async () => {
-  const res = await fetch("/api/images");
+  const res = await fetch("/api/assets");
+  console.log(res);
 
   const data = (await res.json()) as Asset[];
+  console.log(data);
 
   return data;
 };
 
-export const PosterContextProvider: FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const TemplateProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const assetsQuery = useQuery({ queryKey: ["assets"], queryFn: getAssets });
 
-  const [posterBg, setPosterBg] =
+  const [template, setTemplate] = useState<TemplateVariants>("poster");
+  const [primaryColor, setPrimaryColor] =
     useState<keyof typeof colorItemVariants>("primary");
+  const form = useForm<PosterFormInputs | BannerFormInputs>();
+
   const [topics, setTopics] = useState<string[]>([]);
   const [presenters, setPresenters] = useState<string[]>([]);
   const [assets, setAssets] = useState<Asset[]>([]);
 
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
-
-  const posterForm = useForm<ContentFormInputs>();
 
   const addTopic = (topic: string) => {
     if (!topic) return;
@@ -120,12 +157,24 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
     setAssets((prevAssets) => prevAssets.filter((a) => a.key !== assetKey));
   };
 
-  const providerValue = {
-    posterForm,
+  const clearContext = () => {
+    setTemplate("poster");
+    setPrimaryColor("primary");
+    setTopics([]);
+    setPresenters([]);
+    setAssets([]);
+    setDate(undefined);
+    setTime(undefined);
+  };
+
+  const value = {
+    clearContext,
+    template,
+    setTemplate,
     assetsQuery,
-    posterBg: {
-      posterBg,
-      setPosterBg,
+    primaryColor: {
+      color: primaryColor,
+      setPrimaryColor,
     },
     topics: {
       topics,
@@ -152,8 +201,8 @@ export const PosterContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <PosterContext.Provider value={providerValue}>
-      {children}
-    </PosterContext.Provider>
+    <TemplateContext.Provider value={value}>
+      <FormProvider {...form}>{children}</FormProvider>
+    </TemplateContext.Provider>
   );
 };

@@ -1,7 +1,13 @@
-import Link from "next/link";
-import { FC } from "react";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { FC, ReactNode, useContext } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
+import { TemplateContext } from "@/context/template-context";
+
+import { AssetsForm } from "./assets-form";
+import { ConfigForm } from "./config-form";
 import {
   Accordion,
   AccordionContent,
@@ -11,30 +17,36 @@ import {
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 
-import { AssetsForm } from "./assets-form";
-import { ContentForm } from "./content-form";
-import { TemplateForm } from "./template-form";
-
 interface Props {
   onDownload: () => void;
+  children: ReactNode;
 }
 
-export const PostForm: FC<Props> = ({ onDownload }) => {
+export const PostForm: FC<Props> = ({ onDownload, children }) => {
+  const router = useRouter();
+
+  const { clearContext } = useContext(TemplateContext);
+
   const handleDownload = () => {
     onDownload();
   };
 
+  const handleGoBack = () => {
+    clearContext();
+    router.back();
+  };
+
   return (
-    <div className="relative col-span-2 h-screen w-full overflow-hidden bg-muted text-white">
+    <div className="relative col-span-2 row-span-1 h-screen w-full overflow-hidden bg-muted text-white">
       <ScrollArea className="relative flex h-full flex-col gap-1 overflow-auto">
         <div className="flex flex-col p-4">
           <div className="flex flex-row items-center gap-2">
-            <Link
-              href="/"
+            <Button
+              onClick={handleGoBack}
               className="flex h-8 items-center justify-center rounded-sm border border-white bg-muted px-2 text-lg transition-all hover:bg-primary"
             >
               <BiArrowBack />
-            </Link>
+            </Button>
             <h1 className="text-xl">Edita la plantilla</h1>
           </div>
           <Accordion type="single" collapsible>
@@ -44,14 +56,12 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
             >
               <AccordionTrigger>Plantilla</AccordionTrigger>
               <AccordionContent>
-                <TemplateForm />
+                <ConfigForm />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="content-form" className="border-b-slate-400">
               <AccordionTrigger>Contenido</AccordionTrigger>
-              <AccordionContent>
-                <ContentForm />
-              </AccordionContent>
+              <AccordionContent>{children}</AccordionContent>
             </AccordionItem>
             <AccordionItem value="assets-form" className="border-b-slate-400">
               <AccordionTrigger>Recursos gráficos</AccordionTrigger>
@@ -72,26 +82,3 @@ export const PostForm: FC<Props> = ({ onDownload }) => {
     </div>
   );
 };
-
-{
-  /* <div>
-          <form onSubmit={submitPicture(onSubmitPicture)}>
-            <Label htmlFor="picture">Imagen</Label>
-            <div className="flex flex-row items-center gap-2">
-              <Input
-                {...regPicture("picture")}
-                id="picture"
-                type="file"
-                accept="image/*"
-              />
-              <Button
-                size="icon"
-                type="submit"
-                className="text-lg transition-all hover:bg-primary hover:brightness-110"
-              >
-                <MdAdd />
-              </Button>
-            </div>
-          </form>
-        </div> */
-}

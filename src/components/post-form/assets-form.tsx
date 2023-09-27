@@ -1,7 +1,9 @@
+"use client";
+
 import { useContext } from "react";
 import { useQueryClient } from "react-query";
 
-import { PosterContext } from "@/context/poster";
+import { TemplateContext } from "@/context/template-context";
 import { UploadDropzone } from "@/utils/uploadthing";
 
 import { AssetItem } from "../asset-item/asset-item";
@@ -10,7 +12,7 @@ import { ScrollArea } from "../ui/scroll-area";
 export const AssetsForm = () => {
   const queryClient = useQueryClient();
 
-  const { assetsQuery } = useContext(PosterContext);
+  const { assetsQuery } = useContext(TemplateContext);
 
   return (
     <>
@@ -41,9 +43,18 @@ export const AssetsForm = () => {
             }}
           />
         </div>
-        <ScrollArea className="rounded-sm border border-primary bg-slate-950">
-          <div className="grid h-60 items-start justify-start gap-2 p-2 md:grid-cols-3 md:grid-rows-2">
-            {assetsQuery?.isLoading && <p className="text-center col-span-full row-span-full">Loading...</p>}
+        <ScrollArea className="h-60 rounded-sm border border-primary bg-slate-950">
+          <div className="grid grid-cols-2 grid-rows-1 gap-2 p-2 md:grid-cols-3">
+            {assetsQuery?.isLoading && (
+              <p className="col-span-full row-span-full text-center">
+                Loading...
+              </p>
+            )}
+            {!assetsQuery?.isLoading && assetsQuery?.isError && (
+              <p className="col-span-full row-span-full text-center">
+                Ocurrió un error al cargar los archivos
+              </p>
+            )}
             {assetsQuery?.data &&
               assetsQuery.data.map((asset, index) => (
                 <AssetItem key={`Asset ${asset.key} ${index}`} asset={asset} />

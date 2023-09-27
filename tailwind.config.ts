@@ -17,10 +17,13 @@ module.exports = withUt({
         "2xl": "1400px",
       },
     },
-    fontFamily: {
-      sans: ["Poppins", "sans-serif"],
-    },
     extend: {
+      backgroundOpacity: ["active"],
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
+        roboto: ["var(--font-roboto)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
